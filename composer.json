@@ -16,8 +16,12 @@
         }
     ],
     "minimum-stability": "stable",
+    "require": {
+        "php": "^8.3"
+    },
     "require-dev": {
-        "pestphp/pest": "^3.8"
+        "pestphp/pest": "^3.8",
+        "rector/rector": "^2.1"
     },
     "config": {
         "sort-packages": true,
@@ -26,6 +30,7 @@
         }
     },
     "scripts": {
-        "test": ["./vendor/bin/pest"]
+        "test": ["./vendor/bin/pest"],
+        "rector": ["./vendor/bin/rector"]
     }
 }
