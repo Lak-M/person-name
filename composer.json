@@ -1,0 +1,31 @@
+{
+    "name": "lakm/person-name",
+    "description": "Format personal names in various styles-full, abbreviated, or familiar based on country specific conventions",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lakm\\PersonName\\": "src/",
+            "Tests\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lakshan Madushanka",
+            "email": "epmadushanka@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "pestphp/pest": "^3.8"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": ["./vendor/bin/pest"]
+    }
+}
