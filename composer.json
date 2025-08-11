@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1",
         "rector/rector": "^2.1"
     },
     "config": {
@@ -31,6 +32,7 @@
     },
     "scripts": {
         "test": ["./vendor/bin/pest"],
-        "rector": ["./vendor/bin/rector"]
+        "rector": ["./vendor/bin/rector"],
+        "phpstan": ["./vendor/bin/phpstan analyse"]
     }
 }
