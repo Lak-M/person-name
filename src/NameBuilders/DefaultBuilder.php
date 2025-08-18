@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Lakm\PersonName\NameBuilders;
 
 use InvalidArgumentException;
+use Lakm\PersonName\Abbreviator\Abbreviator;
 use Lakm\PersonName\Contracts\NameBuilderContract;
+use Lakm\PersonName\Enums\Abbreviate;
 use Lakm\PersonName\Enums\Country;
 
 class DefaultBuilder extends NameBuilderContract
@@ -18,7 +20,7 @@ class DefaultBuilder extends NameBuilderContract
 
         $name = preg_replace('/\s+/', ' ', mb_trim($fullName));
         $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
-        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
+        $parts = array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');
@@ -90,10 +92,6 @@ class DefaultBuilder extends NameBuilderContract
 
     public function sorted(): string
     {
-        if (isset(static::$sortedName)) {
-            return static::$sortedName;
-        }
-
         $name = $this->toArray();
 
         $first = trim($name['firstName']);
@@ -107,5 +105,26 @@ class DefaultBuilder extends NameBuilderContract
 
         // No last name: FirstName + MiddleName
         return $first . ($middle !== '' ? ' ' . $middle : '');
+    }
+
+    public function abbreviated(
+        bool $includePrefix = false,
+        bool $includeSuffix = false,
+        bool $withDot = true,
+        bool $strict = false,
+        bool $removeParticles = false,
+        Abbreviate $format = Abbreviate::Initials
+    ): string {
+        return Abbreviator::execute(
+            firstName: $this->first(),
+            middleName: $this->middle(),
+            lastName: $this->last(),
+            prefix: $includePrefix ? $this->prefix() : null,
+            suffix: $includeSuffix ? $this->suffix() : null,
+            withDot: $withDot,
+            strict: $strict,
+            removeParticles: $removeParticles,
+            format: $format,
+        );
     }
 }

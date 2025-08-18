@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\Contracts;
 
+use Lakm\PersonName\Enums\Abbreviate;
 use Lakm\PersonName\Enums\Country;
 
 abstract class NameBuilderContract
@@ -28,7 +29,7 @@ abstract class NameBuilderContract
 
     protected static string $fullName;
 
-    protected static string $sortedName;
+    protected static string $sanitizedFullName;
 
     final public function __construct(
         private readonly string $firstName,
@@ -42,6 +43,15 @@ abstract class NameBuilderContract
     abstract public static function fromFullName(string $fullName, ?Country $country = null): static;
 
     abstract public function sorted(): string;
+
+    abstract public function abbreviated(
+        bool $includePrefix = false,
+        bool $includeSuffix = false,
+        bool $withDot = true,
+        bool $strict = false,
+        bool $removeParticles = false,
+        Abbreviate $format = Abbreviate::Initials
+    ): string;
 
     public static function sortParticles(): void
     {
@@ -83,11 +93,16 @@ abstract class NameBuilderContract
 
     public function fullName(): string
     {
-        if ( ! isset($this->fullName)) {
-            return $this->prefix . $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName . ' ' . $this->suffix;
+        if ( ! isset(static::$sanitizedFullName)) {
+            $name = static::$fullName ?? $this->prefix . ' ' . $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName . ' ' . $this->suffix;
+
+            // We don't need to keep more than one space between name parts
+            $name = preg_replace('/\s{2,}/', ' ', $name);
+
+            return trim($name ?? '');
         }
 
-        return static::$fullName;
+        return static::$sanitizedFullName;
     }
 
     /**
