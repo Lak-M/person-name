@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 
-require __DIR__ . '/../../Datasets/DataSets.php';
+require __DIR__ . '/../../Data/DefaultNameList.php';
 
 it('extends NameBuilderContract', function (): void {
     expect(DefaultBuilder::class)->toExtend(NameBuilderContract::class);
@@ -33,6 +33,20 @@ it('can create a person name from full name', function (
     array $formats,
 ): void {
     $n1 = DefaultBuilder::fromFullName($fullName);
+
+    if ($prefix) {
+        $prefix = explode(' ', $prefix);
+        sort($prefix, SORT_STRING);
+
+        $prefix = implode(' ', $prefix);
+    }
+
+    if ($suffix) {
+        $suffix = explode(' ', $suffix);
+        sort($suffix, SORT_STRING);
+
+        $suffix = implode(' ', $suffix);
+    }
 
     expect($n1)->toBeInstanceOf(DefaultBuilder::class)
         ->and($n1->first())->toBe($firstName)

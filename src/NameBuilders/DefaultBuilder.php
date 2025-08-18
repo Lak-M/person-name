@@ -18,7 +18,7 @@ class DefaultBuilder extends NameBuilderContract
 
         $name = preg_replace('/\s+/', ' ', mb_trim($fullName));
         $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
-        $parts = array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
+        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');

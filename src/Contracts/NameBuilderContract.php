@@ -15,10 +15,13 @@ abstract class NameBuilderContract
     public static array $commonSuffixes = ['Jr.', 'Sr.', 'PhD'];
 
     /** @var array|string[] */
-    public static array $commonParticles = ['de', 'de la', 'van', 'von', 'le', 'du', 'di'];
+    public static array $commonParticles = ['de', 'la', 'van', 'von', 'le', 'du', 'di'];
 
     /** @var array|string[] */
     public static array $romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+
+    /** @var array|string[] */
+    public static array $generationalSuffixes = ['Jr.', 'Sr.', 'II', 'III', 'IV', 'V'];
 
     /** @var array|string[] */
     public static array $sortedCommonParticles;
@@ -43,7 +46,7 @@ abstract class NameBuilderContract
     public static function sortParticles(): void
     {
         if ( ! isset(static::$sortedCommonParticles)) {
-            usort(self::$commonPrefixes, fn (string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
+            usort(self::$commonPrefixes, fn(string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
             static::$sortedCommonParticles = self::$commonParticles;
         }
     }
