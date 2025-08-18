@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\Contracts;
 
+use Exception;
+
 abstract class AbbreviatorContract
 {
     public function __construct(
-        protected readonly string  $firstName,
+        protected readonly string $firstName,
         protected readonly ?string $middleName = null,
         protected readonly ?string $lastName = null,
         protected readonly ?string $prefix = null,
         protected readonly ?string $suffix = null,
-        protected readonly bool    $withDot = true,
-        protected readonly bool    $strict = false,
-        protected readonly bool    $removeParticles = false,
+        protected readonly bool $withDot = true,
+        protected readonly bool $strict = false,
+        protected readonly bool $removeParticles = false,
     ) {}
 
     abstract public function abbreviate(): string;
@@ -47,9 +49,9 @@ abstract class AbbreviatorContract
     }
 
     /**
-     * @param array<string|null>|string $parts
-     * @return string
-     * @throws \Exception
+     * @param  array<string|null>|string  $parts
+     *
+     * @throws Exception
      */
     protected function getInitials(array|string $parts): string
     {
@@ -85,8 +87,8 @@ abstract class AbbreviatorContract
             if ( ! $this->strict) {
                 $parts = preg_split('/[\s-]+/', $part);
 
-                if (!$parts) {
-                    throw new \Exception('Error occurred while splitting name part');
+                if ( ! $parts) {
+                    throw new Exception('Error occurred while splitting name part');
                 }
 
                 foreach ($parts as $p) {
