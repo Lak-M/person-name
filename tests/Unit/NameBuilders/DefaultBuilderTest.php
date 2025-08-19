@@ -83,11 +83,11 @@ it('can sort a name', function (
 it('can give the possessive name', function (): void {
     expect(
         DefaultBuilder::fromFullName('David')
-            ->possessive()
+            ->possessive(),
     )->toBe('David\'s')
         ->and(
             DefaultBuilder::fromFullName('James')
-                ->possessive()
+                ->possessive(),
         )->toBe('James\'');
 
     $name = DefaultBuilder::fromFullName('David James');
