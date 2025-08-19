@@ -58,7 +58,7 @@ abstract class NameBuilderContract
     public static function sortParticles(): void
     {
         if ( ! isset(static::$sortedCommonParticles)) {
-            usort(self::$commonPrefixes, fn(string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
+            usort(self::$commonPrefixes, fn (string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
             static::$sortedCommonParticles = self::$commonParticles;
         }
     }
@@ -66,6 +66,11 @@ abstract class NameBuilderContract
     public function first(): string
     {
         return $this->firstName;
+    }
+
+    public function familiar(): ?string
+    {
+        return $this->first();
     }
 
     public function middle(): ?string
@@ -76,6 +81,11 @@ abstract class NameBuilderContract
     public function last(): ?string
     {
         return $this->lastName;
+    }
+
+    public function family(): ?string
+    {
+        return $this->last();
     }
 
     public function country(): ?Country
