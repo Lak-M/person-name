@@ -24,13 +24,13 @@ it('can create a person name from constructor', function (): void {
 });
 
 it('can create a person name from full name', function (
-    string $fullName,
-    string $firstName,
+    string  $fullName,
+    string  $firstName,
     ?string $middleName,
     ?string $lastName,
     ?string $prefix,
     ?string $suffix,
-    array $formats,
+    array   $formats,
 ): void {
     $n1 = DefaultBuilder::fromFullName($fullName);
 
@@ -66,13 +66,13 @@ it('can abbreviate a name', function (): void {
 });
 
 it('can sort a name', function (
-    string $fullName,
-    string $firstName,
+    string  $fullName,
+    string  $firstName,
     ?string $middleName,
     ?string $lastName,
     ?string $prefix,
     ?string $suffix,
-    array $formats,
+    array   $formats,
 ): void {
     expect(
         DefaultBuilder::fromFullName($fullName)
@@ -95,5 +95,14 @@ it('can give the possessive name', function (): void {
     expect($name->possessive($name->fullName()))->toBe('David James\'')
         ->and($name->possessive($name->first()))->toBe('David\'s')
         ->and($name->possessive($name->last()))->toBe('James\'');
+});
 
+it('can redact a name', function (): void {
+    $n1 = new DefaultBuilder('Chrisstopher');
+    $n2 = new DefaultBuilder('Ch');
+    $n3 = new DefaultBuilder('C');
+
+    expect($n1->redated())->toBe('Chr*****')
+        ->and($n2->redated())->toBe('Ch******')
+        ->and($n3->redated())->toBe('C*******');
 });

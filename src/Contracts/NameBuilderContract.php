@@ -68,6 +68,32 @@ abstract class NameBuilderContract
         return $this->firstName;
     }
 
+    public function mentionable(): string
+    {
+        return '@' . $this->firstName;
+    }
+
+    public function nick(int $noOfLetters = 4): string
+    {
+        return mb_substr($this->firstName, 0, 4);
+    }
+
+    public function redated(int $length = 8, int $keep = 3, string $mask = '*'): string
+    {
+        if ($this->first() === '') {
+            return str_repeat($mask, $length);
+        }
+
+        // Keep first letters
+        $firstLetters = mb_substr($this->first(), 0, $keep);
+
+        // Fill remaining to reach fixed length
+        $remainingLength = max($length - mb_strlen($firstLetters), 0);
+        $masked = str_repeat($mask, $remainingLength);
+
+        return $firstLetters . $masked;
+    }
+
     public function familiar(): ?string
     {
         return $this->first();
