@@ -121,4 +121,17 @@ class DefaultBuilder extends NameBuilderContract
             format: $format,
         );
     }
+
+    public function possessive(?string $name = null): string
+    {
+        if (!$name) {
+            $name = $this->first();
+        }
+
+        if (str_ends_with($name, 's') || str_ends_with($name, 'S')) {
+            return $name . "'";
+        }
+
+        return $name . "'s";
+    }
 }

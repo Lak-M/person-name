@@ -79,3 +79,21 @@ it('can sort a name', function (
             ->sorted(),
     )->toBe($formats['sorted']);
 })->with(DEFAULT_PERSON_NAMES);
+
+it('can give the possessive name', function (): void {
+    expect(
+        DefaultBuilder::fromFullName('David')
+            ->possessive()
+    )->toBe('David\'s')
+        ->and(
+            DefaultBuilder::fromFullName('James')
+                ->possessive()
+        )->toBe('James\'');
+
+    $name = DefaultBuilder::fromFullName('David James');
+
+    expect($name->possessive($name->fullName()))->toBe('David James\'')
+        ->and($name->possessive($name->first()))->toBe('David\'s')
+        ->and($name->possessive($name->last()))->toBe('James\'');
+
+});

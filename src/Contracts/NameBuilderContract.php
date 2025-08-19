@@ -53,6 +53,8 @@ abstract class NameBuilderContract
         Abbreviate $format = Abbreviate::Initials,
     ): string;
 
+    abstract public function possessive(?string $name = null): string;
+
     public static function sortParticles(): void
     {
         if ( ! isset(static::$sortedCommonParticles)) {
