@@ -58,28 +58,24 @@ abstract class NameBuilderContract
     public static function sortParticles(): void
     {
         if ( ! isset(static::$sortedCommonParticles)) {
-            usort(self::$commonPrefixes, fn(string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
+            usort(self::$commonPrefixes, fn (string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
             static::$sortedCommonParticles = self::$commonParticles;
         }
     }
 
-
     /**
-     * @param string $name
      * @return string[]
      */
     public static function clear(string $name): array
     {
         // Normalize spaces
         $name = preg_replace('/\s+/', ' ', mb_trim($name));
-        // Get non-empty parts
-        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
 
-        return $parts;
+        // Get non-empty parts
+        return array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
     }
 
     /**
-     * @param string $name
      * @return string[]
      */
     public static function sanitize(string $name): array
@@ -88,10 +84,9 @@ abstract class NameBuilderContract
         $name = preg_replace('/\s+/', ' ', mb_trim($name));
         // Remove text between parentheses (...) or double quotes ""
         $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
-        // Get non-empty parts
-        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
 
-        return $parts;
+        // Get non-empty parts
+        return array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
     }
 
     /**
@@ -111,7 +106,7 @@ abstract class NameBuilderContract
 
         sort($collectedPrefixes, SORT_STRING);
 
-        return  $collectedPrefixes;
+        return $collectedPrefixes;
     }
 
     /**
@@ -131,7 +126,7 @@ abstract class NameBuilderContract
 
         sort($collectedPrefixes, SORT_STRING);
 
-        return  $collectedPrefixes;
+        return $collectedPrefixes;
     }
 
     public function first(): string
