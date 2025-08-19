@@ -12,43 +12,24 @@ use Lakm\PersonName\Enums\Country;
 
 class DefaultBuilder extends NameBuilderContract
 {
-    public static function fromFullName(string $fullName, ?Country $country = null): static
+    public static function fromFullName(string $fullName, ?Country $country = null, bool $shouldSanitize = true): static
     {
         static::$fullName = $fullName;
 
         static::sortParticles();
 
-        $name = preg_replace('/\s+/', ' ', mb_trim($fullName));
-        $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
-        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
+        $parts = $shouldSanitize ? static::sanitize($fullName) : static::clear($fullName);
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');
         }
 
-        // Remove prefixes
-        $collectedPrefixes = [];
-        while ($parts && in_array($parts[0], static::$commonPrefixes, true)) {
-            $collectedPrefixes[] = array_shift($parts);
-        }
-
-        // Remove suffixes (including Roman numerals)
-        $collectedSuffixes = [];
-        while ($parts && (in_array(end($parts), static::$commonSuffixes, true) || in_array(end($parts), static::$romanNumerals))) {
-            array_unshift($collectedSuffixes, array_pop($parts));
-        }
+        $collectedPrefixes = static::getPrefixes($parts);
+        $collectedSuffixes = static::getSuffixes($parts);
 
         // First name
         /** @var string $firstName */
         $firstName = array_shift($parts);
-
-        if ($collectedPrefixes) {
-            sort($collectedPrefixes, SORT_STRING);
-        }
-
-        if ($collectedSuffixes) {
-            sort($collectedSuffixes, SORT_STRING);
-        }
 
         if (count($parts) === 0) {
             return new static(
@@ -124,7 +105,7 @@ class DefaultBuilder extends NameBuilderContract
 
     public function possessive(?string $name = null): string
     {
-        if (!$name) {
+        if ( ! $name) {
             $name = $this->first();
         }
 

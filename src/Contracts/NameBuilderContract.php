@@ -10,7 +10,7 @@ use Lakm\PersonName\Enums\Country;
 abstract class NameBuilderContract
 {
     /** @var array|string[] */
-    public static array $commonPrefixes = ['Mr.', 'Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.'];
+    public static array $commonPrefixes = ['Mr.', 'Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.', 'Rev.', 'Sir', 'Capt.', 'Col.', 'Gen.'];
 
     /** @var array|string[] */
     public static array $commonSuffixes = ['Jr.', 'Sr.', 'PhD'];
@@ -63,6 +63,77 @@ abstract class NameBuilderContract
         }
     }
 
+
+    /**
+     * @param string $name
+     * @return string[]
+     */
+    public static function clear(string $name): array
+    {
+        // Normalize spaces
+        $name = preg_replace('/\s+/', ' ', mb_trim($name));
+        // Get non-empty parts
+        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
+
+        return $parts;
+    }
+
+    /**
+     * @param string $name
+     * @return string[]
+     */
+    public static function sanitize(string $name): array
+    {
+        // Normalize spaces
+        $name = preg_replace('/\s+/', ' ', mb_trim($name));
+        // Remove text between parentheses (...) or double quotes ""
+        $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
+        // Get non-empty parts
+        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
+
+        return $parts;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getPrefixes(string|array &$parts): array
+    {
+        if (is_string($parts)) {
+            $parts = explode(' ', $parts);
+        }
+
+        $collectedPrefixes = [];
+
+        while ($parts && in_array($parts[0], static::$commonPrefixes, true)) {
+            $collectedPrefixes[] = array_shift($parts);
+        }
+
+        sort($collectedPrefixes, SORT_STRING);
+
+        return  $collectedPrefixes;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSuffixes(string|array &$parts): array
+    {
+        if (is_string($parts)) {
+            $parts = explode(' ', $parts);
+        }
+
+        $collectedPrefixes = [];
+
+        while ($parts && (in_array(end($parts), static::$commonSuffixes, true) || in_array(end($parts), static::$romanNumerals))) {
+            array_unshift($collectedPrefixes, array_pop($parts));
+        }
+
+        sort($collectedPrefixes, SORT_STRING);
+
+        return  $collectedPrefixes;
+    }
+
     public function first(): string
     {
         return $this->firstName;
@@ -73,9 +144,9 @@ abstract class NameBuilderContract
         return '@' . $this->firstName;
     }
 
-    public function nick(int $noOfLetters = 4): string
+    public function nick(int $length = 4): string
     {
-        return mb_substr($this->firstName, 0, 4);
+        return mb_substr($this->firstName, 0, $length);
     }
 
     public function redated(int $length = 8, int $keep = 3, string $mask = '*'): string
@@ -110,6 +181,11 @@ abstract class NameBuilderContract
     }
 
     public function family(): ?string
+    {
+        return $this->last();
+    }
+
+    public function surname(): ?string
     {
         return $this->last();
     }
