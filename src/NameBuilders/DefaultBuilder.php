@@ -20,7 +20,7 @@ class DefaultBuilder extends NameBuilderContract
 
         $name = preg_replace('/\s+/', ' ', mb_trim($fullName));
         $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
-        $parts = array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
+        $parts = array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');
@@ -92,19 +92,13 @@ class DefaultBuilder extends NameBuilderContract
 
     public function sorted(): string
     {
-        $name = $this->toArray();
-
-        $first = trim($name['firstName']);
-        $middle = trim($name['middleName'] ?? '');
-        $last = trim($name['lastName'] ?? '');
-
-        if ($last !== '') {
+        if ($this->last()) {
             // Format: LastName, FirstName MiddleName
-            return $last . ', ' . $first . ($middle !== '' ? ' ' . $middle : '');
+            return $this->last() . ', ' . $this->first() . ($this->middle() ? ' ' . $this->middle() : '');
         }
 
         // No last name: FirstName + MiddleName
-        return $first . ($middle !== '' ? ' ' . $middle : '');
+        return $this->first() . ($this->middle() ? ' ' . $this->middle() : '');
     }
 
     public function abbreviated(
@@ -113,7 +107,7 @@ class DefaultBuilder extends NameBuilderContract
         bool $withDot = true,
         bool $strict = false,
         bool $removeParticles = false,
-        Abbreviate $format = Abbreviate::Initials
+        Abbreviate $format = Abbreviate::Initials,
     ): string {
         return Abbreviator::execute(
             firstName: $this->first(),

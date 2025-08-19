@@ -58,9 +58,24 @@ it('can create a person name from full name', function (
 
 })->with(DEFAULT_PERSON_NAMES);
 
-it('can abbreviate a name', function () {
+it('can abbreviate a name', function (): void {
     expect(
         DefaultBuilder::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')
-        ->abbreviated()
+            ->abbreviated(),
     )->toBe('M. A. d. l. V.');
 });
+
+it('can sort a name', function (
+    string $fullName,
+    string $firstName,
+    ?string $middleName,
+    ?string $lastName,
+    ?string $prefix,
+    ?string $suffix,
+    array $formats,
+): void {
+    expect(
+        DefaultBuilder::fromFullName($fullName)
+            ->sorted(),
+    )->toBe($formats['sorted']);
+})->with(DEFAULT_PERSON_NAMES);
