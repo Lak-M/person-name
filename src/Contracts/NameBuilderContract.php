@@ -37,10 +37,9 @@ abstract class NameBuilderContract
         private readonly ?string $lastName = null,
         private readonly ?string $prefix = null,
         private readonly ?string $suffix = null,
-        private readonly ?Country $country = null,
     ) {}
 
-    abstract public static function fromFullName(string $fullName, ?Country $country = null): static;
+    abstract public static function fromFullName(string $fullName): static;
 
     abstract public function sorted(): string;
 
@@ -183,11 +182,6 @@ abstract class NameBuilderContract
     public function surname(): ?string
     {
         return $this->last();
-    }
-
-    public function country(): ?Country
-    {
-        return $this->country;
     }
 
     public function prefix(): ?string

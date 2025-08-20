@@ -8,21 +8,32 @@ use InvalidArgumentException;
 use Lakm\PersonName\Abbreviator\Abbreviator;
 use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\Enums\Abbreviate;
-use Lakm\PersonName\Enums\Country;
 
 class DefaultBuilder extends NameBuilderContract
 {
-    public static function fromFullName(string $fullName, ?Country $country = null, bool $shouldSanitize = true): static
+    /**
+     * @param string $fullName
+     * @param $shouldSanitize
+     * @return string[]
+     */
+    public static function boot(string $fullName, $shouldSanitize): array
     {
         static::$fullName = $fullName;
 
         static::sortParticles();
 
-        $parts = $shouldSanitize ? static::sanitize($fullName) : static::clear($fullName);
+        $parts =  $shouldSanitize ? static::sanitize($fullName) : static::clear($fullName);
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');
         }
+
+        return $parts;
+    }
+
+    public static function fromFullName(string $fullName, bool $shouldSanitize = true): static
+    {
+        $parts = self::boot($fullName, $shouldSanitize);
 
         $collectedPrefixes = static::getPrefixes($parts);
         $collectedSuffixes = static::getSuffixes($parts);
@@ -39,15 +50,16 @@ class DefaultBuilder extends NameBuilderContract
             );
         }
 
-        // Last name construction
         $lastNameParts = [];
         $lastNameParts[] = array_pop($parts);
+
+        // Last name construction by removing particles from the middle name
         while ($parts) {
             $matched = false;
             foreach (static::$sortedCommonParticles as $particle) {
                 $words = explode(' ', $particle);
                 $len = count($words);
-                if (count($parts) >= $len && implode(' ', array_slice($parts, -$len)) === $particle) {
+                if (count($parts) >= $len && strtolower(implode(' ', array_slice($parts, -$len))) === strtolower($particle)) {
                     $lastNameParts = array_merge(array_slice($parts, -$len), $lastNameParts);
                     array_splice($parts, -$len);
                     $matched = true;

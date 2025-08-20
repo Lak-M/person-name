@@ -8,6 +8,9 @@ use Lakm\PersonName\Contracts\AbbreviatorContract;
 
 class FirstMiddleInitialLast extends AbbreviatorContract
 {
+    /**
+     * @throws \Exception
+     */
     public function abbreviate(): string
     {
         if ( ! $this->middleName) {
@@ -19,6 +22,6 @@ class FirstMiddleInitialLast extends AbbreviatorContract
 
         $middleInitials = $this->getInitials($this->middleName);
 
-        return $this->firstName . ' ' . $middleInitials . ' ' . $this->lastName;
+        return $this->finalAbbreviation($this->firstName . ' ' . $middleInitials . ' ' . $this->lastName);
     }
 }
