@@ -6,12 +6,12 @@ namespace Lakm\PersonName\Enums;
 
 enum Country: string
 {
-    case Spain = 'Spain';
+    case SRI_LANKA = 'sri lanka';
 
     public function code(): string
     {
         return match ($this) {
-            self::Spain => 'ES',
+            self::SRI_LANKA => 'LK',
         };
     }
 }
