@@ -1,0 +1,22 @@
+name: PHP Linting (pint)
+on: pull_request
+jobs:
+  phplint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "laravel-pint"
+        uses: aglipanci/laravel-pint-action@latest
+        with:
+          preset: per
+          verboseMode: true
+          testMode: false
+          configPath: "pint.json"
+          pintVersion: 1.24.0
+          onlyDirty: true
+          onlyDiff: "main"
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: PHP Linting (Pint)
