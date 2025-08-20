@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\Abbreviator\Strategies;
 
+use Exception;
 use Lakm\PersonName\Contracts\AbbreviatorContract;
 
 class FirstMiddleInitialLast extends AbbreviatorContract
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function abbreviate(): string
     {

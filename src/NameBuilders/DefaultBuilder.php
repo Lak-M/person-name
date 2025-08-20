@@ -16,7 +16,7 @@ class DefaultBuilder extends NameBuilderContract
      * @param $shouldSanitize
      * @return string[]
      */
-    public static function boot(string $fullName, $shouldSanitize): array
+    public static function boot(string $fullName, bool $shouldSanitize): array
     {
         static::$fullName = $fullName;
 
@@ -59,7 +59,7 @@ class DefaultBuilder extends NameBuilderContract
             foreach (static::$sortedCommonParticles as $particle) {
                 $words = explode(' ', $particle);
                 $len = count($words);
-                if (count($parts) >= $len && strtolower(implode(' ', array_slice($parts, -$len))) === strtolower($particle)) {
+                if (count($parts) >= $len && mb_strtolower(implode(' ', array_slice($parts, -$len))) === mb_strtolower($particle)) {
                     $lastNameParts = array_merge(array_slice($parts, -$len), $lastNameParts);
                     array_splice($parts, -$len);
                     $matched = true;

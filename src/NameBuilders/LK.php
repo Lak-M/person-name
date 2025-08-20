@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lakm\PersonName\NameBuilders;
 
 use Lakm\PersonName\Contracts\NameBuilderContract;
+use Override;
 
 class LK extends DefaultBuilder
 {
-    #[\Override]
+    #[Override]
     public static function fromFullName(string $fullName, bool $shouldSanitize = true): static
     {
         $parts = parent::boot($fullName, $shouldSanitize);
@@ -23,9 +26,9 @@ class LK extends DefaultBuilder
 
         foreach ($parts as $part) {
             foreach (NameBuilderContract::$commonParticles as $suffix) {
-                if (strtolower($suffix) === strtolower($part)) {
+                if (mb_strtolower($suffix) === mb_strtolower($part)) {
                     $fullName = implode(' ', $parts);
-                    $lName = trim(substr($fullName, strpos($fullName, $part)));
+                    $lName = trim(mb_substr($fullName, (int) mb_strpos($fullName, $part)));
 
                     //First name + middle names
                     $parts = explode(' ', trim(str_replace($lName, '', $fullName)));

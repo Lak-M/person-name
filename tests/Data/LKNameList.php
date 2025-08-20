@@ -114,4 +114,3 @@ const LK_PERSON_NAMES = [
         ],
     ],
 ];
-

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\LK;
 

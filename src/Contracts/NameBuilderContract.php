@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace Lakm\PersonName\Contracts;
 
 use Lakm\PersonName\Enums\Abbreviate;
-use Lakm\PersonName\Enums\Country;
 
 abstract class NameBuilderContract
 {
     /** @var array|string[] */
     public static array $commonPrefixes = ['Mr.', 'Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.', 'Rev.', 'Sir', 'Capt.', 'Col.', 'Gen.'];
 
-    /** @var array|string[] */
+    /** @var string[] */
     public static array $commonSuffixes = ['Jr.', 'Sr.', 'PhD'];
 
-    /** @var array|string[] */
+    /** @var string[] */
     public static array $commonParticles = ['de', 'la', 'van', 'von', 'le', 'du', 'di'];
 
-    /** @var array|string[] */
+    /** @var string[] */
     public static array $romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
 
-    /** @var array|string[] */
+    /** @var string[] */
     public static array $generationalSuffixes = ['Jr.', 'Sr.', 'II', 'III', 'IV', 'V'];
 
-    /** @var array|string[] */
+    /** @var string[] */
     public static array $sortedCommonParticles;
 
     protected static string $fullName;
@@ -57,7 +56,7 @@ abstract class NameBuilderContract
     public static function sortParticles(): void
     {
         if ( ! isset(static::$sortedCommonParticles)) {
-            usort(self::$commonPrefixes, fn (string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
+            usort(self::$commonPrefixes, fn(string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
             static::$sortedCommonParticles = self::$commonParticles;
         }
     }
@@ -71,7 +70,7 @@ abstract class NameBuilderContract
         $name = preg_replace('/\s+/', ' ', mb_trim($name));
 
         // Get non-empty parts
-        return array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
+        return array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
     }
 
     /**
@@ -85,47 +84,7 @@ abstract class NameBuilderContract
         $name = preg_replace('/([("]).+?([)"])/', '', $name ?? '');
 
         // Get non-empty parts
-        return array_filter(explode(' ', $name ?? ''), fn ($p): bool => $p !== '');
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getPrefixes(string|array &$parts): array
-    {
-        if (is_string($parts)) {
-            $parts = explode(' ', $parts);
-        }
-
-        $collectedPrefixes = [];
-
-        while ($parts && in_array($parts[0], static::$commonPrefixes, true)) {
-            $collectedPrefixes[] = array_shift($parts);
-        }
-
-        sort($collectedPrefixes, SORT_STRING);
-
-        return $collectedPrefixes;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSuffixes(string|array &$parts): array
-    {
-        if (is_string($parts)) {
-            $parts = explode(' ', $parts);
-        }
-
-        $collectedPrefixes = [];
-
-        while ($parts && (in_array(end($parts), static::$commonSuffixes, true) || in_array(end($parts), static::$romanNumerals))) {
-            array_unshift($collectedPrefixes, array_pop($parts));
-        }
-
-        sort($collectedPrefixes, SORT_STRING);
-
-        return $collectedPrefixes;
+        return array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
     }
 
     public function first(): string
@@ -218,5 +177,41 @@ abstract class NameBuilderContract
             'middleName' => $this->middleName,
             'lastName' => $this->lastName,
         ];
+    }
+
+    /**
+     * @param string[] $parts
+     * @return string[]
+     */
+    protected static function getPrefixes(array &$parts): array
+    {
+        $collectedPrefixes = [];
+
+        while ($parts && in_array($parts[0], static::$commonPrefixes, true)) {
+            $collectedPrefixes[] = array_shift($parts);
+        }
+
+        sort($collectedPrefixes, SORT_STRING);
+
+        return $collectedPrefixes;
+    }
+
+    /**
+     * @param string[] $parts
+     * @return string[]
+     */
+    protected static function getSuffixes(array &$parts): array
+    {
+        /** @var string[] $collectedSuffixes */
+        $collectedSuffixes = [];
+
+        while ($parts && (in_array(end($parts), static::$commonSuffixes, true) || in_array(end($parts), static::$romanNumerals))) {
+            array_unshift($collectedSuffixes, array_pop($parts));
+        }
+
+        sort($collectedSuffixes, SORT_STRING);
+
+        // For the sake of phpstan, we ensure that the suffixes are strings
+        return array_filter($collectedSuffixes, fn($v) => is_string($v));
     }
 }
