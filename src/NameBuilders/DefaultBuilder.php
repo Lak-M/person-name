@@ -43,8 +43,8 @@ class DefaultBuilder extends NameBuilderContract
         if (count($parts) === 0) {
             return new static(
                 firstName: $firstName,
-                prefix: $collectedPrefixes ? implode(' ', $collectedPrefixes) : null,
-                suffix: $collectedSuffixes ? implode(' ', $collectedSuffixes) : null,
+                prefix: $collectedPrefixes,
+                suffix: $collectedSuffixes,
             );
         }
 
@@ -76,8 +76,8 @@ class DefaultBuilder extends NameBuilderContract
             $firstName,
             $middleName,
             $lastName,
-            $collectedPrefixes ? implode(' ', $collectedPrefixes) : null,
-            $collectedSuffixes ? implode(' ', $collectedSuffixes) : null,
+            $collectedPrefixes,
+            $collectedSuffixes,
         );
     }
 

@@ -7,11 +7,13 @@ namespace Lakm\PersonName\Enums;
 enum Country: string
 {
     case SRI_LANKA = 'sri lanka';
+    case CHINA = 'china';
 
     public function code(): string
     {
         return match ($this) {
             self::SRI_LANKA => 'LK',
+            self::CHINA => 'CN',
         };
     }
 }

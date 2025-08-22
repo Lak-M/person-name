@@ -244,9 +244,9 @@ abstract class NameBuilderContract
 
     /**
      * @param string[] $parts
-     * @return string[]
+     * @return string|null
      */
-    protected static function extractPrefixes(array &$parts): array
+    protected static function extractPrefixes(array &$parts): ?string
     {
         $collectedPrefixes = [];
 
@@ -258,14 +258,16 @@ abstract class NameBuilderContract
 
         sort($collectedPrefixes, SORT_STRING);
 
-        return $collectedPrefixes;
+        $collectedSuffixes = implode(' ', $collectedPrefixes);
+
+        return empty($collectedPrefixes) ? null : $collectedSuffixes;
     }
 
     /**
      * @param string[] $parts
-     * @return string[]
+     * @return string|null
      */
-    protected static function extractSuffixes(array &$parts): array
+    protected static function extractSuffixes(array &$parts): ?string
     {
         /** @var string[] $collectedSuffixes */
         $collectedSuffixes = [];
@@ -278,7 +280,8 @@ abstract class NameBuilderContract
 
         sort($collectedSuffixes, SORT_STRING);
 
-        // For the sake of phpstan, we ensure that the suffixes are strings
-        return array_filter($collectedSuffixes, fn($v) => is_string($v));
+        $collectedSuffixes = implode(' ', $collectedSuffixes);
+
+        return empty($collectedSuffixes) ? null : $collectedSuffixes;
     }
 }

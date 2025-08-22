@@ -7,6 +7,7 @@ namespace Lakm\PersonName;
 use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\Enums\Country;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
+use UnexpectedValueException;
 
 final readonly class PersonName
 {
@@ -28,8 +29,8 @@ final readonly class PersonName
 
         $builder = $className::fromFullName($fullName, $shouldSanitize);
 
-        if (! $builder instanceof NameBuilderContract) {
-            throw new \UnexpectedValueException("Returned value is not a NameBuilderContract");
+        if ( ! $builder instanceof NameBuilderContract) {
+            throw new UnexpectedValueException("Returned value is not a NameBuilderContract");
         }
 
         return $builder;

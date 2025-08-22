@@ -13,11 +13,8 @@ class LK extends DefaultBuilder
     {
         $parts = parent::boot($fullName, $shouldSanitize);
 
-        $collectedPrefixes = implode(' ', static::extractPrefixes($parts));
-        $collectedSuffixes = implode(' ', static::extractSuffixes($parts));
-
-        $collectedPrefixes = empty($collectedPrefixes) ? null : $collectedPrefixes;
-        $collectedSuffixes = empty($collectedSuffixes) ? null : $collectedSuffixes;
+        $collectedPrefixes = static::extractPrefixes($parts);
+        $collectedSuffixes = static::extractSuffixes($parts);
 
         $fName = null;
         $mName = null;
