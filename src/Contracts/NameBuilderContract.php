@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace Lakm\PersonName\Contracts;
 
 use Lakm\PersonName\Enums\Abbreviate;
+use Lakm\PersonName\Helpers;
 
 abstract class NameBuilderContract
 {
-    /** @var array|string[] */
+    /** @var string[] */
+    public static array $commonHonors = ["Dr.", "Prof.", "Rev.", "Ven.", "Most Ven.", "Hon.", "Rt. Hon.", "Sir", "Lady",
+        "Gen.", "Col.", "Capt.", "Maj.", "Lt.", "Cmdr.", "Esq.", "Thero", "Prince", "Princess", "King", "Queen", "Eng.",
+        "Arch.", "CA", "PhD", "MD", "BSc", "MSc",
+    ];
+
+    /** @var string[] */
     public static array $commonPrefixes = ['Mr.', 'Mrs.', 'Ms.', 'Miss', 'Dr.', 'Prof.', 'Rev.', 'Sir', 'Capt.', 'Col.', 'Gen.'];
 
     /** @var string[] */
@@ -22,9 +29,6 @@ abstract class NameBuilderContract
 
     /** @var string[] */
     public static array $generationalSuffixes = ['Jr.', 'Sr.', 'II', 'III', 'IV', 'V'];
-
-    /** @var string[] */
-    public static array $sortedCommonParticles;
 
     protected static string $fullName;
 
@@ -53,14 +57,6 @@ abstract class NameBuilderContract
 
     abstract public function possessive(?string $name = null): string;
 
-    public static function sortParticles(): void
-    {
-        if ( ! isset(static::$sortedCommonParticles)) {
-            usort(self::$commonPrefixes, fn(string $a, string $b): int => mb_substr_count($b, ' ') <=> mb_substr_count($a, ' '));
-            static::$sortedCommonParticles = self::$commonParticles;
-        }
-    }
-
     /**
      * @return string[]
      */
@@ -85,6 +81,54 @@ abstract class NameBuilderContract
 
         // Get non-empty parts
         return array_filter(explode(' ', $name ?? ''), fn($p): bool => $p !== '');
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getCommonPrefixList(): array
+    {
+        $list = array_map(fn(string $prefix) => Helpers::replaceLastLetter($prefix, '.'), static::$commonPrefixes);
+
+        sort($list, SORT_NATURAL);
+
+        return $list;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getCommonSuffixList(): array
+    {
+        $list =  array_map(fn(string $suffix) => Helpers::replaceLastLetter($suffix, '.'), static::$commonSuffixes);
+
+        sort($list, SORT_NATURAL);
+
+        return $list;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getCommonHonorList(): array
+    {
+        $list =  array_map(fn(string $honor) => Helpers::replaceLastLetter($honor, '.'), static::$commonHonors);
+
+        sort($list, SORT_NATURAL);
+
+        return $list;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getCommonParticleList(): array
+    {
+        $list =  array_map(fn(string $particle) => mb_strtolower($particle), static::$commonParticles);
+
+        sort($list, SORT_NATURAL);
+
+        return $list;
     }
 
     public function first(): string
@@ -116,6 +160,20 @@ abstract class NameBuilderContract
         $masked = str_repeat($mask, $remainingLength);
 
         return $firstLetters . $masked;
+    }
+
+    public function fullName(): string
+    {
+        if ( ! isset(static::$sanitizedFullName)) {
+            $name = static::$fullName ?? $this->prefix . ' ' . $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName . ' ' . $this->suffix;
+
+            // We don't need to keep more than one space between name parts
+            $name = preg_replace('/\s{2,}/', ' ', $name);
+
+            return trim($name ?? '');
+        }
+
+        return static::$sanitizedFullName;
     }
 
     public function familiar(): ?string
@@ -153,18 +211,21 @@ abstract class NameBuilderContract
         return $this->suffix;
     }
 
-    public function fullName(): string
+    /**
+     * @return string[]
+     */
+    public function honours(): array
     {
-        if ( ! isset(static::$sanitizedFullName)) {
-            $name = static::$fullName ?? $this->prefix . ' ' . $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName . ' ' . $this->suffix;
+        $suffix = explode(' ', $this->suffix() ?? '');
+        $prefix = explode(' ', $this->prefix() ?? '');
 
-            // We don't need to keep more than one space between name parts
-            $name = preg_replace('/\s{2,}/', ' ', $name);
+        $list = array_merge($suffix, $prefix);
 
-            return trim($name ?? '');
-        }
+        sort($list, SORT_NATURAL);
 
-        return static::$sanitizedFullName;
+        $honorList =  array_filter($list, fn(string $honor) => in_array(Helpers::replaceLastLetter($honor, '.'), static::getCommonHonorList(), true));
+
+        return array_values($honorList);
     }
 
     /**
@@ -176,6 +237,8 @@ abstract class NameBuilderContract
             'firstName' => $this->firstName,
             'middleName' => $this->middleName,
             'lastName' => $this->lastName,
+            'prefix' => $this->lastName,
+            'suffix' => $this->lastName,
         ];
     }
 
@@ -183,11 +246,13 @@ abstract class NameBuilderContract
      * @param string[] $parts
      * @return string[]
      */
-    protected static function getPrefixes(array &$parts): array
+    protected static function extractPrefixes(array &$parts): array
     {
         $collectedPrefixes = [];
 
-        while ($parts && in_array($parts[0], static::$commonPrefixes, true)) {
+        $prefixList = array_merge(static::getCommonPrefixList(), static::getCommonHonorList());
+
+        while ($parts && in_array(Helpers::replaceLastLetter($parts[0], '.', ), $prefixList, true)) {
             $collectedPrefixes[] = array_shift($parts);
         }
 
@@ -200,12 +265,14 @@ abstract class NameBuilderContract
      * @param string[] $parts
      * @return string[]
      */
-    protected static function getSuffixes(array &$parts): array
+    protected static function extractSuffixes(array &$parts): array
     {
         /** @var string[] $collectedSuffixes */
         $collectedSuffixes = [];
 
-        while ($parts && (in_array(end($parts), static::$commonSuffixes, true) || in_array(end($parts), static::$romanNumerals))) {
+        $suffixList = array_merge(static::getCommonSuffixList(), static::getCommonHonorList());
+
+        while ($parts && (in_array(Helpers::replaceLastLetter(end($parts), '.'), $suffixList, true) || in_array(end($parts), static::$romanNumerals))) {
             array_unshift($collectedSuffixes, array_pop($parts));
         }
 

@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 use Lakm\PersonName\Enums\Abbreviate;
+use Lakm\PersonName\Enums\Country;
 
 const LK_PERSON_NAMES = [
     'LK1' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Sanjeewa Perera",
         "firstName" => "Sanjeewa",
         "middleName" => null,
@@ -24,6 +26,7 @@ const LK_PERSON_NAMES = [
         ],
     ],
     'LK2' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Chathurika Sandamali Fernando",
         "firstName" => "Chathurika",
         "middleName" => "Sandamali",
@@ -42,6 +45,7 @@ const LK_PERSON_NAMES = [
         ],
     ],
     'LK3' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Amal Prasanna De Silva",
         "firstName" => "Amal",
         "middleName" => "Prasanna",
@@ -60,6 +64,7 @@ const LK_PERSON_NAMES = [
         ],
     ],
     'LK4' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Ruwan Kumara Wickramasinghe",
         "firstName" => "Ruwan",
         "middleName" => "Kumara",
@@ -78,6 +83,7 @@ const LK_PERSON_NAMES = [
         ],
     ],
     'LK5' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Dilani Lakmali Perera",
         "firstName" => "Dilani",
         "middleName" => "Lakmali",
@@ -96,6 +102,7 @@ const LK_PERSON_NAMES = [
         ],
     ],
     'LK6' => [
+        "country" => Country::SRI_LANKA,
         "fullName" => "Ramesh De Alwis",
         "firstName" => "Ramesh",
         "middleName" => null,

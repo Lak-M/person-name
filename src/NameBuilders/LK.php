@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\NameBuilders;
 
-use Lakm\PersonName\Contracts\NameBuilderContract;
 use Override;
 
 class LK extends DefaultBuilder
@@ -14,8 +13,8 @@ class LK extends DefaultBuilder
     {
         $parts = parent::boot($fullName, $shouldSanitize);
 
-        $collectedPrefixes = implode(' ', static::getPrefixes($parts));
-        $collectedSuffixes = implode(' ', static::getSuffixes($parts));
+        $collectedPrefixes = implode(' ', static::extractPrefixes($parts));
+        $collectedSuffixes = implode(' ', static::extractSuffixes($parts));
 
         $collectedPrefixes = empty($collectedPrefixes) ? null : $collectedPrefixes;
         $collectedSuffixes = empty($collectedSuffixes) ? null : $collectedSuffixes;
@@ -25,8 +24,8 @@ class LK extends DefaultBuilder
         $lName = null;
 
         foreach ($parts as $part) {
-            foreach (NameBuilderContract::$commonParticles as $suffix) {
-                if (mb_strtolower($suffix) === mb_strtolower($part)) {
+            foreach (static::getCommonParticleList() as $particle) {
+                if ($particle === mb_strtolower($part)) {
                     $fullName = implode(' ', $parts);
                     $lName = trim(mb_substr($fullName, (int) mb_strpos($fullName, $part)));
 

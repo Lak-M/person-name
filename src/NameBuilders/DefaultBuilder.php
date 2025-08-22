@@ -13,14 +13,12 @@ class DefaultBuilder extends NameBuilderContract
 {
     /**
      * @param string $fullName
-     * @param $shouldSanitize
+     * @param bool $shouldSanitize
      * @return string[]
      */
     public static function boot(string $fullName, bool $shouldSanitize): array
     {
         static::$fullName = $fullName;
-
-        static::sortParticles();
 
         $parts =  $shouldSanitize ? static::sanitize($fullName) : static::clear($fullName);
 
@@ -35,8 +33,8 @@ class DefaultBuilder extends NameBuilderContract
     {
         $parts = self::boot($fullName, $shouldSanitize);
 
-        $collectedPrefixes = static::getPrefixes($parts);
-        $collectedSuffixes = static::getSuffixes($parts);
+        $collectedPrefixes = static::extractPrefixes($parts);
+        $collectedSuffixes = static::extractSuffixes($parts);
 
         // First name
         /** @var string $firstName */
@@ -56,10 +54,10 @@ class DefaultBuilder extends NameBuilderContract
         // Last name construction by removing particles from the middle name
         while ($parts) {
             $matched = false;
-            foreach (static::$sortedCommonParticles as $particle) {
+            foreach (static::getCommonParticleList() as $particle) {
                 $words = explode(' ', $particle);
                 $len = count($words);
-                if (count($parts) >= $len && mb_strtolower(implode(' ', array_slice($parts, -$len))) === mb_strtolower($particle)) {
+                if (count($parts) >= $len && mb_strtolower(implode(' ', array_slice($parts, -$len))) === $particle) {
                     $lastNameParts = array_merge(array_slice($parts, -$len), $lastNameParts);
                     array_splice($parts, -$len);
                     $matched = true;

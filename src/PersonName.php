@@ -4,36 +4,44 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName;
 
+use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\Enums\Country;
+use Lakm\PersonName\NameBuilders\DefaultBuilder;
 
 final readonly class PersonName
 {
-    public function __construct(
-        private string $firstName,
-        private string $middleName,
-        private string $lastName,
-        private ?string $suffix = null,
-        private ?string $prefix = null,
-        private ?Country $country = null,
-    ) {}
-
-    public function firstName(): string
+    /**
+     * @param string $fullName
+     * @param Country|null $country
+     * When following option is true, the full name will be sanitized to remove extra spaces, braces, Quotes...
+     * @param bool $shouldSanitize
+     *
+     * @return NameBuilderContract
+     */
+    public static function fromFullName(string $fullName, ?Country $country = null, bool $shouldSanitize = true): NameBuilderContract
     {
-        return $this->firstName;
+        if ( ! $country) {
+            return DefaultBuilder::fromFullName($fullName, $shouldSanitize);
+        }
+
+        $className = "Lakm\PersonName\NameBuilders" . '\\' . $country->code();
+
+        $builder = $className::fromFullName($fullName, $shouldSanitize);
+
+        if (! $builder instanceof NameBuilderContract) {
+            throw new \UnexpectedValueException("Returned value is not a NameBuilderContract");
+        }
+
+        return $builder;
     }
-
-    public function middleName(): string
-    {
-        return $this->middleName;
-    }
-
-    public function lastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function country(): ?Country
-    {
-        return $this->country;
+    public function build(
+        string $firstName,
+        string $middleName,
+        string $lastName,
+        ?string $suffix = null,
+        ?string $prefix = null,
+        ?Country $country = null,
+    ): void {
+        //        return new DefaultBuilder()
     }
 }

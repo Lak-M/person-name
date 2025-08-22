@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Lakm\PersonName\Enums\Country;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\LK;
 
@@ -24,6 +25,7 @@ it('can create a person name from constructor', function (): void {
 });
 
 it('can create a person name from full name', function (
+    ?Country $country,
     string  $fullName,
     string  $firstName,
     ?string $middleName,
@@ -50,6 +52,7 @@ it('can create a person name from full name', function (
 
     expect($n1)->toBeInstanceOf(LK::class)
         ->and($n1->fullName())->toBe(preg_replace('/\s{2,}/', ' ', $fullName))
+        ->and($n1->first())->toBe($firstName)
         ->and($n1->middle())->toBe($middleName)
         ->and($n1->last())->toBe($lastName)
         ->and($n1->prefix())->toBe($prefix)
@@ -66,6 +69,7 @@ it('can abbreviate a name', function (): void {
 });
 
 it('can sort a name', function (
+    ?Country $country,
     string  $fullName,
     string  $firstName,
     ?string $middleName,

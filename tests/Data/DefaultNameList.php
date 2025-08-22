@@ -6,6 +6,7 @@ use Lakm\PersonName\Enums\Abbreviate;
 
 const DEFAULT_PERSON_NAMES = [
     'default1' => [
+        "country" => null,
         "fullName" => "John Smith",
         "firstName" => "John",
         "middleName" => null,
@@ -24,6 +25,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default2' => [
+        "country" => null,
         "fullName" => "Emily Rose Parker",
         "firstName" => "Emily",
         "middleName" => "Rose",
@@ -42,6 +44,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default3' => [
+        "country" => null,
         "fullName" => "James Robert   William Davis",
         "firstName" => "James",
         "middleName" => "Robert William",
@@ -60,6 +63,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default4' => [
+        "country" => null,
         "fullName" => "Sarah Connor-Smith",
         "firstName" => "Sarah",
         "middleName" => null,
@@ -78,6 +82,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default5' => [
+        "country" => null,
         "fullName" => "Jean-Luc Picard",
         "firstName" => "Jean-Luc",
         "middleName" => null,
@@ -96,6 +101,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default6' => [
+        "country" => null,
         "fullName" => "Dr. John Smith",
         "firstName" => "John",
         "middleName" => null,
@@ -114,6 +120,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default7' => [
+        "country" => null,
         "fullName" => "John Smith Jr.",
         "firstName" => "John",
         "middleName" => null,
@@ -132,6 +139,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default8' => [
+        "country" => null,
         "fullName" => "William Johnson III",
         "firstName" => "William",
         "middleName" => null,
@@ -150,6 +158,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default9' => [
+        "country" => null,
         "fullName" => "Ludwig van Beethoven",
         "firstName" => "Ludwig",
         "middleName" => null,
@@ -168,6 +177,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default10' => [
+        "country" => null,
         "fullName" => "Maria de la Cruz",
         "firstName" => "Maria",
         "middleName" => null,
@@ -186,6 +196,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default11' => [
+        "country" => null,
         "fullName" => "Richard \"Rick\" Johnson",
         "firstName" => "Richard",
         "middleName" => null,
@@ -204,6 +215,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default12' => [
+        "country" => null,
         "fullName" => "William (Bill) Thompson",
         "firstName" => "William",
         "middleName" => null,
@@ -222,6 +234,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default13' => [
+        "country" => null,
         "fullName" => "Madonna",
         "firstName" => "Madonna",
         "middleName" => null,
@@ -240,6 +253,7 @@ const DEFAULT_PERSON_NAMES = [
         ],
     ],
     'default14' => [
+        "country" => null,
         "fullName" => "Prof. Dr. Maria Anna de la Vega III PhD",
         "firstName" => "Maria",
         "middleName" => "Anna",
