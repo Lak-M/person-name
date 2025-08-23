@@ -24,15 +24,15 @@ class LK extends DefaultBuilder
             foreach (static::getCommonParticleList() as $particle) {
                 if ($particle === mb_strtolower($part)) {
                     $fullName = implode(' ', $parts);
-                    $lName = trim(mb_substr($fullName, (int) mb_strpos($fullName, $part)));
+                    $lName = mb_trim(mb_substr($fullName, (int) mb_strpos($fullName, $part)));
 
                     //First name + middle names
-                    $parts = explode(' ', trim(str_replace($lName, '', $fullName)));
+                    $parts = explode(' ', mb_trim(str_replace($lName, '', $fullName)));
 
                     $fName = array_shift($parts);
 
                     if (count($parts)) {
-                        $mName = trim(implode(' ', $parts));
+                        $mName = mb_trim(implode(' ', $parts));
                     }
 
                     return new static($fName, $mName, $lName, $collectedPrefixes, $collectedSuffixes);
