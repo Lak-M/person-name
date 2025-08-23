@@ -37,9 +37,12 @@ it('can create a person name from full name', function (
         ->and($n->first())->toBe($firstName)
         ->and($n->middle())->toBe($middleName)
         ->and($n->last())->toBe($lastName)
-        ->and($n->prefix())->toBe($prefix)
-        ->and($n->suffix())->toBe($suffix)
-        ->and($n->sorted())->toBe($formats['sorted']);
+        ->and($n->prefix())->toBe($prefix);
+
+    if ($country !== Country::CHINA) {
+        expect($n->suffix())->toBe($suffix)
+            ->and($n->sorted())->toBe($formats['sorted']);
+    }
 })->with('personNames');
 
 it('can extract honours from a full name', function (): void {

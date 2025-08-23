@@ -5,8 +5,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/DefaultNameList.php';
 require_once __DIR__ . '/LKNameList.php';
+require_once __DIR__ . '/CNNameList.php';
 
-define("PERSON_NAMES", [
+const PERSON_NAMES = [
     ...DEFAULT_PERSON_NAMES,
     ...LK_PERSON_NAMES,
-]);
+    ...CN_PERSON_NAMES,
+];

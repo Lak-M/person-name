@@ -88,7 +88,7 @@ abstract class NameBuilderContract
      */
     public static function getCommonPrefixList(): array
     {
-        $list = array_map(fn(string $prefix) => Helpers::replaceLastLetter($prefix, '.'), static::$commonPrefixes);
+        $list = array_map(fn(string $prefix): string => Helpers::replaceLastLetter($prefix, '.'), static::$commonPrefixes);
 
         sort($list, SORT_NATURAL);
 
@@ -100,7 +100,7 @@ abstract class NameBuilderContract
      */
     public static function getCommonSuffixList(): array
     {
-        $list =  array_map(fn(string $suffix) => Helpers::replaceLastLetter($suffix, '.'), static::$commonSuffixes);
+        $list =  array_map(fn(string $suffix): string => Helpers::replaceLastLetter($suffix, '.'), static::$commonSuffixes);
 
         sort($list, SORT_NATURAL);
 
@@ -112,7 +112,7 @@ abstract class NameBuilderContract
      */
     public static function getCommonHonorList(): array
     {
-        $list =  array_map(fn(string $honor) => Helpers::replaceLastLetter($honor, '.'), static::$commonHonors);
+        $list =  array_map(fn(string $honor): string => Helpers::replaceLastLetter($honor, '.'), static::$commonHonors);
 
         sort($list, SORT_NATURAL);
 
@@ -223,7 +223,7 @@ abstract class NameBuilderContract
 
         sort($list, SORT_NATURAL);
 
-        $honorList =  array_filter($list, fn(string $honor) => in_array(Helpers::replaceLastLetter($honor, '.'), static::getCommonHonorList(), true));
+        $honorList =  array_filter($list, fn(string $honor): bool => in_array(Helpers::replaceLastLetter($honor, '.'), static::getCommonHonorList(), true));
 
         return array_values($honorList);
     }

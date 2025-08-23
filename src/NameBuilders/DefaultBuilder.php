@@ -11,6 +11,17 @@ use Lakm\PersonName\Enums\Abbreviate;
 
 class DefaultBuilder extends NameBuilderContract
 {
+    /** @var string[]  */
+    protected static array $prefixes = [];
+
+
+    /** @var string[]  */
+    protected static array $suffixes = [];
+
+
+    /** @var string[]  */
+    protected static array $honors = [];
+
     /**
      * @param string $fullName
      * @param bool $shouldSanitize
@@ -24,6 +35,18 @@ class DefaultBuilder extends NameBuilderContract
 
         if (count($parts) === 0) {
             throw new InvalidArgumentException('Name must not be empty.');
+        }
+
+        if (property_exists(static::class, 'prefixes')) {
+            static::$commonPrefixes = array_merge(static::$prefixes, static::$commonPrefixes);
+        }
+
+        if (property_exists(static::class, 'suffixes')) {
+            static::$commonSuffixes = array_merge(static::$suffixes, static::$commonSuffixes);
+        }
+
+        if (property_exists(static::class, 'honors')) {
+            static::$commonHonors = array_merge(static::$honors, static::$commonHonors);
         }
 
         return $parts;
