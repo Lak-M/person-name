@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\NameBuilders;
 
+use Exception;
 use http\Exception\InvalidArgumentException;
 use Lakm\PersonName\Enums\Abbreviate;
 use Override;
@@ -99,7 +100,7 @@ class CN extends DefaultBuilder
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function abbreviated(
         bool $includePrefix = false,
@@ -109,15 +110,15 @@ class CN extends DefaultBuilder
         bool $removeParticles = false,
         Abbreviate $format = Abbreviate::Initials,
     ): string {
-        throw new \Exception('Abbreviation not supported for CN names.');
+        throw new Exception('Abbreviation not supported for CN names.');
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function suffix(): ?string
     {
-        throw new \Exception('Suffixes not supported for CN names.');
+        throw new Exception('Suffixes not supported for CN names.');
     }
 
     /**

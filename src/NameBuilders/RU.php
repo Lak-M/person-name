@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lakm\PersonName\NameBuilders;
 
-
 use Lakm\PersonName\Enums\Gender;
 
 class RU extends SimpleBuilder
@@ -56,7 +55,11 @@ class RU extends SimpleBuilder
     public function fathersName(): ?string
     {
         // Remove common patronymic endings
-        $base = preg_replace('/(ovich|evich|ovna|evna)$/iu', '', $this->patronymic());
+        $base = preg_replace('/(ovich|evich|ovna|evna)$/iu', '', $this->patronymic() ?? '');
+
+        if (!$base) {
+            return null;
+        }
 
         // Common normalization map
         $map = [

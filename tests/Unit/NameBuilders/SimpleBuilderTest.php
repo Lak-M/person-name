@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\SimpleBuilder;
 
-
 it('extends DefaultBuilder', function (): void {
     expect(SimpleBuilder::class)->toExtend(DefaultBuilder::class);
 });

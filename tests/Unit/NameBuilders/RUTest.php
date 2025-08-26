@@ -66,7 +66,7 @@ it('can extract data from full name', function (
     string $patronymic,
     string $fathersName,
     string $lastName,
-) {
+): void {
     $n1 = RU::fromFullName($fullName);
 
     expect($n1->gender())->toBe($gender)
