@@ -13,7 +13,8 @@ class Helpers
         }
 
         if (mb_substr($word, -1) === $lastLetter) {
-            return substr_replace($word, $replaceWith, -1);
+            // Multi-byte safe replacement for last character
+            return mb_substr($word, 0, mb_strlen($word) - 1) . $replaceWith;
         }
 
         return $word;

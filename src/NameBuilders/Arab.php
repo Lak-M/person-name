@@ -28,7 +28,7 @@ class Arab extends DefaultBuilder
      */
     public static function extractTraditionalNameParts(string $fullName): array
     {
-        $parts = explode(' ', trim($fullName));
+        $parts = explode(' ', mb_trim($fullName));
         $firstName = array_shift($parts);
 
 
@@ -128,7 +128,7 @@ class Arab extends DefaultBuilder
     public function fatherName(): ?string
     {
         $words = static::clear($this->fullName());
-        $words = array_map('strtolower', $words);
+        $words = array_map('mb_strtolower', $words);
 
         // Traditional: look for ibn/bin/bint
         foreach ($words as $i => $w) {
