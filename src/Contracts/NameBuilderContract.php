@@ -35,14 +35,21 @@ abstract class NameBuilderContract
     protected static string $sanitizedFullName;
 
     final public function __construct(
-        private readonly string $firstName,
-        private readonly ?string $middleName = null,
-        private readonly ?string $lastName = null,
-        private readonly ?string $prefix = null,
-        private readonly ?string $suffix = null,
-    ) {}
+        private string $firstName,
+        private ?string $middleName = null,
+        private ?string $lastName = null,
+        private ?string $prefix = null,
+        private ?string $suffix = null,
+        private bool $shouldSanitize = false,
+    ) {
+        if ($this->shouldSanitize) {
+            foreach (array_filter($this->toArray()) as $part => $value) {
+                $this->{$part} = implode(' ', static::sanitize($value));
+            }
+        }
+    }
 
-    abstract public static function fromFullName(string $fullName): static;
+    abstract public static function fromFullName(string $fullName, bool $shouldSanitize = true): static;
 
     abstract public function sorted(): string;
 

@@ -57,7 +57,7 @@ class RU extends SimpleBuilder
         // Remove common patronymic endings
         $base = preg_replace('/(ovich|evich|ovna|evna)$/iu', '', $this->patronymic() ?? '');
 
-        if (!$base) {
+        if ( ! $base) {
             return null;
         }
 
