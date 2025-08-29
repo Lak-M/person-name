@@ -1,8 +1,12 @@
+<div align="center">
+
 # Person Name
 
-<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="840" alt="Image"/>
+<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="740" alt="Image"/>
 
-## This package globally handle person names in various formats.
+## ***This package globally handle person names in various formats.***
+
+</div>
 
 ## Insight
 
