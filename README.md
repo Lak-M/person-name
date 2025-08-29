@@ -4,7 +4,7 @@
 
 <hr/>
 
-<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="740" alt="Image"/>
+<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="640" alt="Image"/>
 
 ### ***This package globally handle person names in various formats.***
 
@@ -51,29 +51,29 @@ and I thought this what I waiting for so long. But when I dig into it I realize 
 scenarios. So I decided to stop waiting and develop a solution by myself. I must give credits to this package as it ignited the spark.
 
 ## Features
-- 🏁 Handle Country specific names
-- 🛠️ Build name from full names
-- 🛠️ Build name from parts (constructor)
-- ⚙️ Handle particles, prefix, suffix (western)
-- 🛡️ Universal - Multibyte safe
-- 🤖 Auto sanitize names
-- ✅ Validity check
-- ●●● Name Abbreviations
-  - FirstInitial_LastName
-  - FirstInitial_MiddleInitial_LastName
-  - FirstName_LastInitial
-  - FirstName_MiddleInitial_LastName
-  - Initials
-- 📝 Various Format options
-  - Sorted
-  - Possessive
-  - Redated
-  - Family|sur|last
-  - etc
-- 🧩 Country specific features
-- 📔 Comprehensive test cases
-- 💡 Elegant architecture
-- 🦢 Pure PhP - can use anywhere frameworks, lib etc.
+- 🏁 **Handle Country specific names**
+- 🛠️ **Build name from full names**
+- 🛠️ **Build name from parts (constructor)**
+- ⚙️ **Handle particles, prefix, suffix (western)**
+- 🛡️ **Universal - Multibyte safe**
+- 🤖 **Auto sanitize names**
+- ✅ **Validity check**
+- ●●● **Name Abbreviations**
+  - **FirstInitial_LastName**
+  - **FirstInitial_MiddleInitial_LastName**
+  - **FirstName_LastInitial**
+  - **FirstName_MiddleInitial_LastName**
+  - **Initials**
+- 📝 **Various Format options**
+  - **Sorted**
+  - **Possessive**
+  - **Redated**
+  - **Family|sur|last**
+  - **etc**
+- 🧩 **Country specific features**
+- 📔 **Comprehensive test cases**
+- 💡 **Elegant architecture**
+- 🦢 **Pure PhP - can use anywhere frameworks, lib etc.**
 
 ## Usage
 
@@ -102,10 +102,39 @@ scenarios. So I decided to stop waiting and develop a solution by myself. I must
     bool $checkValidity = false
 )
 ```
+### Abbreviator
+
+Package provide smart abbreviate format with various options. This is also embedded to `PersonName`
+
+```php
+\Lakm\PersonName\Abbreviator\Abbreviator::execute(
+    string $firstName,
+    ?string $middleName = null,
+    ?string $lastName = null,
+    ?string $prefix = null,
+    ?string $suffix = null,
+    bool    $withDot = true,
+    bool    $strict = false,
+    bool    $removeParticles = false,
+    Abbreviate $format = Abbreviate::FirstInitial_LastName,
+)
+```
+#### Available format (`$format`) options
+
+Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.com/Lak-M/person-name/blob/main/src/Enums/Abbreviate.php)
+
+
+- `\Lakm\PersonName\Enums\Abbreviate::FirstInitial_LastName`
+- `\Lakm\PersonName\Enums\Abbreviate::FirstInitial_MiddleInitial_LastName`
+- `\Lakm\PersonName\Enums\Abbreviate::FirstName_LastInitial`
+- `\Lakm\PersonName\Enums\Abbreviate::FirstName_MiddleInitial_LastName`
+- `\Lakm\PersonName\Enums\Abbreviate::Initials`
+
+
 ### Common API
 
 > [!Important]
-> See [NameBuilderContract](https://github.com/Lak-M/person-name/blob/main/src/Contracts/NameBuilderContract.php) for all the available options**
+> See [NameBuilderContract](https://github.com/Lak-M/person-name/blob/main/src/Contracts/NameBuilderContract.php) for all the available options
 
 #### Basic
 
@@ -227,3 +256,16 @@ PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->nick() // m
 
 ```
 #### Abbreviations
+
+Refer [here](#abbreviator) for separate usage.
+
+#### abbreviated(bool $includePrefix = false, bool $includeSuffix = false, bool $withDot = true, bool $strict = false, bool $removeParticles = false, Abbreviate $format = Abbreviate::Initials): string 
+
+Refer [here](#available-format-format-options) for available formats (`$format`)
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->abbreviated() // M. A. d. l. V.
+
+```
