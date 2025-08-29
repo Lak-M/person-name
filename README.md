@@ -1,6 +1,6 @@
 <div align="center">
 
-# Person Name
+<img width="417" height="74" alt="Image" src="https://github.com/user-attachments/assets/6371ad23-cdb2-4a7b-9975-e0c5525f8953" />
 
 <img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="740" alt="Image"/>
 
