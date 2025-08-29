@@ -1,8 +1,8 @@
 # Person Name
 
-## This package globally handle person names in various formats.
+<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="840" alt="Image"/>
 
-<img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="640" alt="Image"/>
+## This package globally handle person names in various formats.
 
 ## Insight
 
