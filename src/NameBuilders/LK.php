@@ -22,7 +22,7 @@ class LK extends DefaultBuilder
 
         foreach ($parts as $part) {
             foreach (static::getCommonParticleList() as $particle) {
-                if ($particle === mb_strtolower($part)) {
+                if (strcasecmp($particle, $part) === 0) {
                     $fullName = implode(' ', $parts);
                     $lName = mb_trim(mb_substr($fullName, (int) mb_strpos($fullName, $part)));
 
