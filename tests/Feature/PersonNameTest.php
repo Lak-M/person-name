@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Lakm\PersonName\Data\PersonNameStatus;
 use Lakm\PersonName\Enums\Country;
 use Lakm\PersonName\Enums\Ethnicity;
+use Lakm\PersonName\Exceptions\InvalidNameException;
 use Lakm\PersonName\NameBuilders\Arab;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\RU;
@@ -11,13 +13,13 @@ use Lakm\PersonName\PersonName;
 
 it('can create a person name from full name', function (
     ?Country $country,
-    string $fullName,
-    string $firstName,
-    ?string $middleName,
-    ?string $lastName,
-    ?string $prefix,
-    ?string $suffix,
-    array $formats,
+    string   $fullName,
+    string   $firstName,
+    ?string  $middleName,
+    ?string  $lastName,
+    ?string  $prefix,
+    ?string  $suffix,
+    array    $formats,
 ): void {
 
     $n = PersonName::fromFullName($fullName, $country);
@@ -78,7 +80,7 @@ it('can create a person name', function (): void {
     $middleName = 'volt';
     $lastName = 'henry';
 
-    $pn =  PersonName::build($firstName, $middleName, $lastName);
+    $pn = PersonName::build($firstName, $middleName, $lastName);
 
     expect($pn)->toBeInstanceOf(DefaultBuilder::class)
         ->and($pn->first())->toBe($firstName)
@@ -91,7 +93,7 @@ it('can create a sanitizes person name', function (): void {
     $middleName = 'volt  m';
     $lastName = '(h) henry';
 
-    $pn =  PersonName::build(
+    $pn = PersonName::build(
         firstName: $firstName,
         middleName: $middleName,
         lastName: $lastName,
@@ -103,4 +105,28 @@ it('can create a sanitizes person name', function (): void {
         ->and($pn->first())->toBe('dimitry')
         ->and($pn->middle())->toBe('volt m')
         ->and($pn->last())->toBe('henry');
+});
+
+it('can detect valid names', function (string $name, array $expected): void {
+    $validity = PersonName::checkValidity($name);
+
+    expect($validity)->toBeInstanceOf(PersonNameStatus::class)
+        ->and($validity->isValid)->toBeFalse()
+        ->and($validity->illegalChars)->toMatchArray($expected);
+})->with([
+    ['name' => 'david@', 'expected' => ['@']],
+    ['name' => '#david@', 'expected' => ['#', '@']],
+    ['name' => '"david', 'expected' => ['"']],
+    ['name' => "?david", 'expected' => ['?']],
+]);
+
+it('throws exception for illegal names', function (): void {
+    expect(fn() => PersonName::fromFullName(fullName: '@david', checkValidity: true))->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::fromFullName(fullName: '@david'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::fromFullName(fullName: 'david', checkValidity: true))->not()->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::fromFullName(fullName: 'david'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn () => PersonName::build(firstName: 'david@', checkValidity: true))->toThrow(InvalidNameException::class)
+        ->and(fn () => PersonName::build(firstName: 'david@'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn () => PersonName::build(firstName: 'david'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn () => PersonName::build(firstName: 'david', checkValidity: true))->not()->toThrow(InvalidNameException::class);
 });
