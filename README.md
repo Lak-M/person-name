@@ -2,11 +2,24 @@
 
 <img width="417" height="74" alt="Image" src="https://github.com/user-attachments/assets/6371ad23-cdb2-4a7b-9975-e0c5525f8953" />
 
+<hr/>
+
 <img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="740" alt="Image"/>
 
-## ***This package globally handle person names in various formats.***
+### ***This package globally handle person names in various formats.***
+
+
+[![Laravel](https://img.shields.io/badge/php-%20%5E8.3-blue)](https://php.net)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lak-M/person-name/run-tests.yml)](https://github.com/Lak-M/person-name/actions?query=workflow%3ATests+branch%3Amain)
+[![Packagist Version](https://img.shields.io/packagist/v/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
+[![Downloads](https://img.shields.io/packagist/dt/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
+[![GitHub License](https://img.shields.io/github/license/Lak-M/person-name)](https://github.com/Lak-M/person-name/blob/main/LICENSE.md)
 
 </div>
+
+## Overview
+This package map names from various countries to standard format [prefix+first+middle+last+suffix] and provide
+various country specific formats and country specific features.
 
 ## Insight
 
@@ -37,3 +50,180 @@ $lastName = $n->last();
 and I thought this what I waiting for so long. But when I dig into it I realize it cannot fullfill my expectations. It can do simple things but not complex 
 scenarios. So I decided to stop waiting and develop a solution by myself. I must give credits to this package as it ignited the spark.
 
+## Features
+- 🏁 Handle Country specific names
+- 🛠️ Build name from full names
+- 🛠️ Build name from parts (constructor)
+- ⚙️ Handle particles, prefix, suffix (western)
+- 🛡️ Universal - Multibyte safe
+- 🤖 Auto sanitize names
+- ✅ Validity check
+- ●●● Name Abbreviations
+  - FirstInitial_LastName
+  - FirstInitial_MiddleInitial_LastName
+  - FirstName_LastInitial
+  - FirstName_MiddleInitial_LastName
+  - Initials
+- 📝 Various Format options
+  - Sorted
+  - Possessive
+  - Redated
+  - Family|sur|last
+  - etc
+- 🧩 Country specific features
+- 📔 Comprehensive test cases
+- 💡 Elegant architecture
+- 🦢 Pure PhP - can use anywhere frameworks, lib etc.
+
+## Usage
+
+### Build from full name
+
+```php
+\Lakm\PersonName\PersonName::fromFullName(
+    string $fullName, 
+    Country|Ethnicity|null $country = null, 
+    bool $shouldSanitize = true, 
+    bool $checkValidity = false
+    )
+```
+
+### Build from constructor
+
+```php
+\Lakm\PersonName\PersonName::build(
+    string $firstName,
+    ?string $middleName = null,
+    ?string $lastName = null,
+    ?string $suffix = null,
+    ?string $prefix = null,
+    Country|Ethnicity|null $country = null,
+    bool $shouldSanitize = true,
+    bool $checkValidity = false
+)
+```
+### Common API
+
+> [!Important]
+> See [NameBuilderContract](https://github.com/Lak-M/person-name/blob/main/src/Contracts/NameBuilderContract.php) for all the available options**
+
+#### Basic
+
+###### first(): string
+
+Returns the first name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->first() // Maria
+
+```
+
+###### middle(): string
+
+Returns the middle name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->middle() // Anna
+
+```
+
+###### last(): string
+
+Returns the last name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->last() // de la Vega
+
+```
+
+###### sorted(): ?string
+
+Returns sorted name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->sorted() // de la Vega, Maria Anna
+
+```
+##### possessive(?string $name = null): string
+
+Returns the possessive name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->possessive() // Maria's
+
+```
+
+##### prefix(): ?string
+
+Returns the prefixes
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->prefix() // Prof. Dr.
+
+```
+
+##### suffix(): ?string
+
+Returns the suffixes
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->suffix() // III PhD
+
+```
+
+##### honours(): string[]
+
+Returns the honours
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->honours() // ['Dr.', 'Prof.', 'PhD']
+
+```
+
+##### redated(int $length = 8, int $keep = 3, string $mask = '*'): string
+
+Returns securely redated first name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->redated() // Mar*****
+
+```
+##### mentionable(): string
+
+Returns the mentionable name
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->mentionable() // @maria
+
+```
+##### nick(int $length = 4): string
+
+Returns the nickname
+
+```php
+use \Lakm\PersonName\PersonName;
+
+PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->nick() // mary
+
+```
+#### Abbreviations
