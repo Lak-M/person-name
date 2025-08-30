@@ -104,7 +104,7 @@ scenarios. So I decided to stop waiting and develop a solution by myself. I must
 ```
 ### Abbreviator
 
-Package provide smart abbreviate format with various options. This is also embedded to `PersonName`
+Package provide smart abbreviate format with various options. **This is also embedded to `PersonName`**
 
 ```php
 \Lakm\PersonName\Abbreviator\Abbreviator::execute(
