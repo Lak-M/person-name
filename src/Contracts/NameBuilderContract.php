@@ -32,7 +32,7 @@ abstract class NameBuilderContract
 
     protected static string $fullName;
 
-    protected static string $sanitizedFullName;
+    protected string $sanitizedFullName;
 
     final public function __construct(
         private string $firstName,
@@ -171,7 +171,7 @@ abstract class NameBuilderContract
 
     public function fullName(): string
     {
-        if ( ! isset(static::$sanitizedFullName)) {
+        if ( ! isset($this->sanitizedFullName)) {
             $name = static::$fullName ?? $this->prefix . ' ' . $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName . ' ' . $this->suffix;
 
             // We don't need to keep more than one space between name parts
@@ -179,12 +179,12 @@ abstract class NameBuilderContract
 
             $name =  mb_trim($name ?? '');
 
-            self::$sanitizedFullName = $name;
+            $this->sanitizedFullName = $name;
 
             return $name;
         }
 
-        return static::$sanitizedFullName;
+        return $this->sanitizedFullName;
     }
 
     public function familiar(): ?string
