@@ -10,6 +10,7 @@ use Lakm\PersonName\NameBuilders\Arab;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\RU;
 use Lakm\PersonName\PersonName;
+use Lakm\PersonName\Contracts\NameBuilderContract;
 
 it('can create a person name from full name', function (
     ?Country $country,
@@ -38,7 +39,7 @@ it('can create a person name from full name', function (
         $suffix = implode(' ', $suffix);
     }
 
-    expect($n)->toBeInstanceOf(Lakm\PersonName\Contracts\NameBuilderContract::class)
+    expect($n)->toBeInstanceOf(NameBuilderContract::class)
         ->and($n->fullName())->toBe(preg_replace('/\s{2,}/', ' ', $fullName))
         ->and($n->first())->toBe($firstName)
         ->and($n->middle())->toBe($middleName)
