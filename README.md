@@ -13,7 +13,7 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lak-M/person-name/run-tests.yml?label=Test)](https://github.com/Lak-M/person-name/actions?query=workflow%3ATests+branch%3Amain)
 [![Packagist Version](https://img.shields.io/packagist/v/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
 [![Downloads](https://img.shields.io/packagist/dt/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
-[![GitHub License](https://img.shields.io/github/license/Lak-M/person-name/LICENSE.md)](https://github.com/Lak-M/person-name/blob/main/LICENSE.md)
+[![GitHub License](https://img.shields.io/github/license/Lak-M/person-name)](https://github.com/Lak-M/person-name/blob/main/LICENSE.md)
 
 </div>
 
