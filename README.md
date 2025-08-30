@@ -18,43 +18,55 @@
 </div>
 
 ## Overview
-This package map names from various countries to standard format [prefix+first+middle+last+suffix] and provide
-various country specific formats and country specific features.
+This package maps names from various countries to a standard format [prefix + first + middle + last + suffix] and 
+provides multiple country-specific formats and features.
 
 ## Insight
 
 ### Problem
 
-- A company decided to automating their business by developing a website. Database has user's table with normalized name field (`first_name`, `middle_name`, `last_name`).
-  but legacy Excel sheets have user's full name column. It wasn't a problem for legacy system as things are handled manually and human are good with full names.
-  But now, the company wants to import legacy data to new system. They need to split full name into first, middle and last names.
-  If it feels like an easy task, just take a minutes and think about it seriously. One solution you can hire a person to do this task manually but
-  the accuracy can be guaranteed. You can automate this task using AI or write some logic again it gonna cost you some money and can't guarantee the accuracy.
-  You will agree with me none of those methods are smooth and reliable. You will have to spend time and efforts to it specially when the client list 
-  contains names from **different countries**. This is when this package comes in handy. with this package all you need to do following,
-```php
-$n = PersonName::fromFullName($fullName, $country);
+- A company decided to automate their business by developing a website. The database has a `users` table with normalized name fields (`first_name`, `middle_name`, `last_name`).
 
-$firstName = $n->first();
-$middleName = $n->middle();
-$lastName = $n->last();
-```
+  However, legacy Excel sheets contain a ***single column*** with users' ***full names***. 
+  This wasn’t a problem for the legacy system, as everything was handled manually and humans are generally good with full names.
+
+  Now, the company wants to import the legacy data into the new system. They need to split full names into ***first, middle, and last names***.
+
+  If this sounds like an easy task, take a moment and think about it seriously. One solution is to hire someone to do it manually but the 
+  accuracy cannot be fully guaranteed. Another option is to automate the task using AI or custom logic but that will cost time and money 
+  and still may not be perfectly accurate.
+
+  You’ll agree that neither method is smooth or reliable, especially when the client list contains names from **different countries**.
+
+  This is where this package comes in handy. With this package, all you need to do is the following:
+
+    ```php
+    $n = PersonName::fromFullName($fullName, $country);
+    
+    $firstName = $n->first();
+    $middleName = $n->middle();
+    $lastName = $n->last();
+    ```
   
-- Your database has user's table with `full_name` field. This is a bad DB design but it exists. Now you need to extract parts.
+- Your database has a users table with a `full_name` field. This is not an ideal database design, but it exists.
+  Now you need to extract the individual name parts.
 
-- Front-end needs names in different format. UI need short name, form need names in standard format, security related things need redated name.
-  like-wise abbreviated, sorted etc. With this package covers all the cases as much as possible.
+- The front-end requires names in different formats: the UI needs **short names, forms need names in a standard format**, 
+  and security related features may require redacted names. Similarly, names may be needed in **abbreviated, sorted, or other variations**. 
+  This package handles all these cases as comprehensively as possible.
 
 ## Motive
- I've faced the problems described [above](#problem) and alwatys needed a solid solution which I coundn't find still. Recetly I show this package
-and I thought this what I waiting for so long. But when I dig into it I realize it cannot fullfill my expectations. It can do simple things but not complex 
-scenarios. So I decided to stop waiting and develop a solution by myself. I must give credits to this package as it ignited the spark.
+I've faced the problems described [above](#problem) and always needed a solid solution, which I still couldn't find. Recently, 
+I came across this [package](https://github.com/hosmelq/name-of-person) and thought, this is what I’ve been waiting for so long. But when I dug into it, 
+I realized it couldn’t fulfill my expectations. It handles simple cases but not complex scenarios.
+
+So, I decided to stop waiting and develop a solution myself. I must give credit to this package, as it ignited the spark.
 
 ## Features
 - 🏁 **Handle Country specific names**
-- 🛠️ **Build name from full names**
-- 🛠️ **Build name from parts (constructor)**
-- ⚙️ **Handle particles, prefix, suffix (western)**
+- 🛠️ **Build names from full names**
+- 🛠️ **Build names from parts (constructor)**
+- ⚙️ **Handle particles, prefixes, suffixes (western)**
 - 🛡️ **Universal - Multibyte safe**
 - 🤖 **Auto sanitize names**
 - ✅ **Validity check**
@@ -71,7 +83,7 @@ scenarios. So I decided to stop waiting and develop a solution by myself. I must
   - **Family|sur|last**
   - **etc**
 - 🧩 **Country specific features**
-- 📔 **Comprehensive test cases**
+- 📔 **Comprehensive test cases with >85% coverage**
 - 💡 **Elegant architecture**
 - 🦢 **Pure PhP - can use anywhere frameworks, lib etc.**
 
@@ -104,7 +116,7 @@ scenarios. So I decided to stop waiting and develop a solution by myself. I must
 ```
 ### Abbreviator
 
-Package provide smart abbreviate format with various options. **This is also embedded to `PersonName`**
+The package provides a smart abbreviation format with multiple options. **This feature is also integrated into PersonName**.
 
 ```php
 \Lakm\PersonName\Abbreviator\Abbreviator::execute(
@@ -269,3 +281,14 @@ use \Lakm\PersonName\PersonName;
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->abbreviated() // M. A. d. l. V.
 
 ```
+## Testing
+```bash
+./vendor/bin/pest
+```
+
+## Security
+Please see [here](https://github.com/Lak-M/person-name/blob/main/SECURITY.md) for our security policy.
+
+## License
+The MIT License (MIT). Please see [License File](https://github.com/Lak-M/person-name/blob/main/LICENSE.md) for more information.
+
