@@ -177,7 +177,11 @@ abstract class NameBuilderContract
             // We don't need to keep more than one space between name parts
             $name = preg_replace('/\s{2,}/', ' ', $name);
 
-            return mb_trim($name ?? '');
+            $name =  mb_trim($name ?? '');
+
+            self::$sanitizedFullName = $name;
+
+            return $name;
         }
 
         return static::$sanitizedFullName;
