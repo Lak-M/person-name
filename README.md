@@ -9,11 +9,11 @@
 ### ***This package globally handle person names in various formats.***
 
 
-[![Laravel](https://img.shields.io/badge/php-%20%5E8.3-blue)](https://php.net)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lak-M/person-name/run-tests.yml)](https://github.com/Lak-M/person-name/actions?query=workflow%3ATests+branch%3Amain)
+[![PHP](https://img.shields.io/badge/php-%20%5E8.3-blue)](https://php.net)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Lak-M/person-name/run-tests.yml?label=Test)](https://github.com/Lak-M/person-name/actions?query=workflow%3ATests+branch%3Amain)
 [![Packagist Version](https://img.shields.io/packagist/v/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
 [![Downloads](https://img.shields.io/packagist/dt/lakm/person-name)](https://packagist.org/packages/lakm/person-name)
-[![GitHub License](https://img.shields.io/github/license/Lak-M/person-name)](https://github.com/Lak-M/person-name/blob/main/LICENSE.md)
+[![GitHub License](https://img.shields.io/github/license/Lak-M/person-name/LICENSE.md)](https://github.com/Lak-M/person-name/blob/main/LICENSE.md)
 
 </div>
 
@@ -150,7 +150,7 @@ Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.c
 
 #### Basic
 
-###### first(): string
+##### first(): string
 
 Returns the first name
 
@@ -158,10 +158,9 @@ Returns the first name
 use \Lakm\PersonName\PersonName;
 
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->first() // Maria
-
 ```
 
-###### middle(): string
+##### middle(): string
 
 Returns the middle name
 
@@ -169,10 +168,9 @@ Returns the middle name
 use \Lakm\PersonName\PersonName;
 
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->middle() // Anna
-
 ```
 
-###### last(): string
+##### last(): string
 
 Returns the last name
 
@@ -180,10 +178,9 @@ Returns the last name
 use \Lakm\PersonName\PersonName;
 
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->last() // de la Vega
-
 ```
 
-###### sorted(): ?string
+##### sorted(): ?string
 
 Returns sorted name
 
@@ -191,7 +188,6 @@ Returns sorted name
 use \Lakm\PersonName\PersonName;
 
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->sorted() // de la Vega, Maria Anna
-
 ```
 ##### possessive(?string $name = null): string
 
@@ -201,7 +197,6 @@ Returns the possessive name
 use \Lakm\PersonName\PersonName;
 
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->possessive() // Maria's
-
 ```
 
 ##### prefix(): ?string
