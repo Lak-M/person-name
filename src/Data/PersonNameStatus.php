@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lakm\PersonName\Data;
 
 final readonly class PersonNameStatus
@@ -11,7 +13,5 @@ final readonly class PersonNameStatus
     public function __construct(
         public readonly bool $isValid,
         public readonly ?array $illegalChars = null,
-    )
-    {
-    }
+    ) {}
 }

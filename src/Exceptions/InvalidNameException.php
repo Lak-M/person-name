@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lakm\PersonName\Exceptions;
 
-final class InvalidNameException extends \Exception
+use Exception;
+
+final class InvalidNameException extends Exception
 {
     public static function from(string $msg = 'Invalid name'): static
     {

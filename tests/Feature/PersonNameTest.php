@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Lakm\PersonName\Contracts\NameBuilderContract;
 use Lakm\PersonName\Data\PersonNameStatus;
 use Lakm\PersonName\Enums\Country;
 use Lakm\PersonName\Enums\Ethnicity;
@@ -10,7 +11,6 @@ use Lakm\PersonName\NameBuilders\Arab;
 use Lakm\PersonName\NameBuilders\DefaultBuilder;
 use Lakm\PersonName\NameBuilders\RU;
 use Lakm\PersonName\PersonName;
-use Lakm\PersonName\Contracts\NameBuilderContract;
 
 it('can create a person name from full name', function (
     ?Country $country,
@@ -126,8 +126,8 @@ it('throws exception for illegal names', function (): void {
         ->and(fn() => PersonName::fromFullName(fullName: '@david'))->not()->toThrow(InvalidNameException::class)
         ->and(fn() => PersonName::fromFullName(fullName: 'david', checkValidity: true))->not()->toThrow(InvalidNameException::class)
         ->and(fn() => PersonName::fromFullName(fullName: 'david'))->not()->toThrow(InvalidNameException::class)
-        ->and(fn () => PersonName::build(firstName: 'david@', checkValidity: true))->toThrow(InvalidNameException::class)
-        ->and(fn () => PersonName::build(firstName: 'david@'))->not()->toThrow(InvalidNameException::class)
-        ->and(fn () => PersonName::build(firstName: 'david'))->not()->toThrow(InvalidNameException::class)
-        ->and(fn () => PersonName::build(firstName: 'david', checkValidity: true))->not()->toThrow(InvalidNameException::class);
+        ->and(fn() => PersonName::build(firstName: 'david@', checkValidity: true))->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::build(firstName: 'david@'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::build(firstName: 'david'))->not()->toThrow(InvalidNameException::class)
+        ->and(fn() => PersonName::build(firstName: 'david', checkValidity: true))->not()->toThrow(InvalidNameException::class);
 });

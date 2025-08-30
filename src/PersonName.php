@@ -49,7 +49,7 @@ final readonly class PersonName
         ?string $prefix = null,
         Country|Ethnicity|null $country = null,
         bool $shouldSanitize = true,
-        bool $checkValidity = false
+        bool $checkValidity = false,
     ): NameBuilderContract {
         if ($checkValidity) {
             foreach (array_filter([$firstName, $middleName, $lastName, $suffix, $prefix]) as $part) {
@@ -67,6 +67,28 @@ final readonly class PersonName
             $suffix,
             $shouldSanitize,
         );
+    }
+
+    public static function checkValidity(string $name): PersonNameStatus
+    {
+        // Allowed: letters (any script), diacritics, spaces, apostrophe, hyphen
+        $pattern = '/^[\p{L}\p{M}\s\'\-]+$/u';
+
+        if (preg_match($pattern, $name)) {
+            return new PersonNameStatus(isValid: true);
+        }
+
+        // Find illegal characters
+        preg_match_all('/[^\p{L}\p{M}\s\'\-]/u', $name, $matches);
+
+        if ($matches[0]) {
+            return new PersonNameStatus(
+                isValid: false,
+                illegalChars: array_unique($matches[0]),
+            );
+        }
+
+        return new PersonNameStatus(isValid: true);
     }
 
     /**
@@ -101,28 +123,6 @@ final readonly class PersonName
         }
     }
 
-    public static function checkValidity(string $name): PersonNameStatus
-    {
-        // Allowed: letters (any script), diacritics, spaces, apostrophe, hyphen
-        $pattern = '/^[\p{L}\p{M}\s\'\-]+$/u';
-
-        if (preg_match($pattern, $name)) {
-            return new PersonNameStatus(isValid: true);
-        }
-
-        // Find illegal characters
-        preg_match_all('/[^\p{L}\p{M}\s\'\-]/u', $name, $matches);
-
-        if ($matches[0]) {
-           return new PersonNameStatus(
-               isValid: false,
-               illegalChars: array_unique($matches[0])
-           );
-        }
-
-        return new PersonNameStatus(isValid: true);
-    }
-
     /**
      * @throws InvalidNameException
      */
@@ -130,12 +130,12 @@ final readonly class PersonName
     {
         $validity = self::checkValidity($name);
 
-        if (!$validity->isValid) {
+        if ( ! $validity->isValid) {
             $illegalChars = $validity->illegalChars ? implode(', ', $validity->illegalChars) : "";
 
             throw new InvalidNameException(
-                'Provided name is invalid. Found illegal characters ' . $illegalChars
-                );
+                'Provided name is invalid. Found illegal characters ' . $illegalChars,
+            );
         }
     }
 }
