@@ -163,6 +163,17 @@ Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.c
 
 #### Basic
 
+##### static checkValidity(string $name)
+
+Check the validity of a name
+
+```php
+use \Lakm\PersonName\PersonName;        
+PersonName::checkValidity('John Doe'); // true
+PersonName::checkValidity('John123'); // false
+PersonName::checkValidity('John#'); // false
+```
+
 ##### first(): string
 
 Returns the first name
@@ -280,7 +291,7 @@ PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->nick() // m
 
 Refer [here](#abbreviator) for separate usage.
 
-#### abbreviated(bool $includePrefix = false, bool $includeSuffix = false, bool $withDot = true, bool $strict = false, bool $removeParticles = false, Abbreviate $format = Abbreviate::Initials): string 
+##### abbreviated(bool $includePrefix = false,bool $includeSuffix = false, bool $withDot = true, bool $strict = false, bool $removeParticles = false, Abbreviate $format = Abbreviate::Initials): string 
 
 Refer [here](#available-format-format-options) for available formats (`$format`)
 
@@ -293,17 +304,17 @@ PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->abbreviated
 
 #### Country specific functions
 
-The package offers country-specific methods, available in the classes(each named using the country code) under [`NameBuilders`](https://github.com/Lak-M/person-name/tree/main/src/NameBuilders).
+The package offers country specific methods, available in the classes(each named using the country code) under [`NameBuilders`](https://github.com/Lak-M/person-name/tree/main/src/NameBuilders).
 
 ##### Arab
 
-**fatherName(): ?string**
-**grandfatherName(): ?string**
-**kunya(): ?string**
-**ism(): ?string**
-**nasab(): ?string**
-**laqab(): ?string**
-**nisbah(): ?string**
+- **fatherName(): ?string**
+- **grandfatherName(): ?string**
+- **kunya(): ?string**
+- **ism(): ?string**
+- **nasab(): ?string**
+- **laqab(): ?string**
+- **nisbah(): ?string**
 
 ## Testing
 ```bash
