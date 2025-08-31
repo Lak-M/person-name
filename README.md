@@ -19,7 +19,7 @@
 
 ## Overview
 This package maps names from various countries to a standard format **[prefix + first + middle + last + suffix]** and 
-provides multiple country-specific formats and features.
+provides multiple country|ethnicity specific formats and features.
 
 ## Insight
 
@@ -63,29 +63,42 @@ I realized it couldn’t fulfill my expectations. It handles simple cases but no
 So, I decided to stop waiting and develop a solution myself. I must give credit to this package, as it ignited the spark.
 
 ## Features
-- 🏁 **Handle Country specific names**
-- 🛠️ **Build names from full names**
-- 🛠️ **Build names from parts (constructor)**
-- ⚙️ **Handle particles, prefixes, suffixes (western)**
-- 🛡️ **Universal - Multibyte safe**
-- 🤖 **Auto sanitize names**
-- ✅ **Validity check**
-- ●●● **Name Abbreviations**
-  - **FirstInitial_LastName**
-  - **FirstInitial_MiddleInitial_LastName**
-  - **FirstName_LastInitial**
-  - **FirstName_MiddleInitial_LastName**
-  - **Initials**
-- 📝 **Various Format options**
-  - **Sorted**
-  - **Possessive**
-  - **Redated**
-  - **Family|sur|last**
-  - **etc**
-- 🧩 **Country specific features**
-- 📔 **Comprehensive test cases with >85% coverage**
-- 💡 **Elegant architecture**
-- 🦢 **Pure PhP - can use anywhere frameworks, lib etc.**
+- 🏁 Handle **Country specific** names
+- 🛠️ **Build names from **full names**
+- 🛠️ **Build names from **parts (constructor)**
+- ⚙️ Handle **particles, prefixes, suffixes (western)**
+- 🛡️ Universal - **Multibyte safe**
+- 🤖 Auto **sanitize** names
+- ✅ **Validity** check
+- ●●● Name **Abbreviations**
+  - FirstInitial_LastName**
+  - FirstInitial_MiddleInitial_LastName
+  - FirstName_LastInitial
+  - FirstName_MiddleInitial_LastName
+  - Initials
+- 📝 Various **Format options**
+  - Sorted
+  - Possessive
+  - Redated
+  - Family|sur|last
+  - etc
+- 🧩 **Country|ethnicity specific** features
+- 📔 Comprehensive **test cases** with **>85%** coverage
+- 💡 Elegant **architecture**
+- 🦢 **Pure PHP** - can use anywhere frameworks, lib etc.
+
+## Supported Countries|Ethnicities
+
+> [!Note]
+> See [Countries](https://github.com/Lak-M/person-name/blob/main/src/Enums/Country.php) and [Ethnicities](https://github.com/Lak-M/person-name/blob/main/src/Enums/Ethnicity.php)
+
+| Name                                                         | Code | Status |
+|--------------------------------------------------------------|------|--------|
+| Western - Default (This is used when the country field null) | -    | ✅      |
+| SRI_LANKA                                                    | LK   | ✅      |
+| CHINA                                                        | CN   | ✅      |
+| RUSSIA                                                       | RU   | ✅      |
+| Arab                                                         | -    | ✅      |
 
 ## Usage
 
@@ -262,6 +275,7 @@ use \Lakm\PersonName\PersonName;
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->nick() // mary
 
 ```
+
 #### Abbreviations
 
 Refer [here](#abbreviator) for separate usage.
@@ -276,6 +290,21 @@ use \Lakm\PersonName\PersonName;
 PersonName::fromFullName('Prof. Dr. Maria Anna de la Vega III PhD')->abbreviated() // M. A. d. l. V.
 
 ```
+
+#### Country specific functions
+
+The package offers country-specific methods, available in the classes(each named using the country code) under [`NameBuilders`](https://github.com/Lak-M/person-name/tree/main/src/NameBuilders).
+
+##### Arab
+
+**fatherName(): ?string**
+**grandfatherName(): ?string**
+**kunya(): ?string**
+**ism(): ?string**
+**nasab(): ?string**
+**laqab(): ?string**
+**nisbah(): ?string**
+
 ## Testing
 ```bash
 ./vendor/bin/pest
