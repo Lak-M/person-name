@@ -6,9 +6,9 @@ namespace Lakm\PersonName\Exceptions;
 
 use Exception;
 
-final class InvalidNameException extends Exception
+final class PartNotSupportException extends Exception
 {
-    public static function from(string $msg = 'Invalid name'): self
+    public static function from(string $msg = 'Part not supported'): self
     {
         return new self($msg);
     }
