@@ -19,7 +19,7 @@
 
 ## Overview
 This package maps names from various countries to a standard format **[prefix + first + middle + last + suffix]** and 
-provides multiple country|ethnicity specific formats and features.
+provides multiple **country|ethnicity** specific formats and features.
 
 ## Insight
 
@@ -52,7 +52,7 @@ provides multiple country|ethnicity specific formats and features.
   Now you need to extract the individual name parts.
 
 - The front-end requires names in different formats: the UI needs **short names, forms need names in a standard format**, 
-  and security related features may require redacted names. Similarly, names may be needed in **abbreviated, sorted, or other variations**. 
+  and security related features may require **redacted names**. Similarly, names may be needed in **abbreviated, sorted, or other variations**. 
   This package handles all these cases as comprehensively as possible.
 
 ## Motive
@@ -82,7 +82,7 @@ So, I decided to stop waiting and develop a solution myself. I must give credit 
   - Redated
   - Family|sur|last
   - etc
-- 🧩 **Country|ethnicity specific** features
+- 🧩 **Country|Ethnicity specific** features
 - 📔 Comprehensive **test cases** with **>85%** coverage
 - 💡 Elegant **architecture**
 - 🦢 **Pure PHP** - can use anywhere frameworks, lib etc.
@@ -129,7 +129,7 @@ So, I decided to stop waiting and develop a solution myself. I must give credit 
 ```
 ### Abbreviator
 
-The package provides a smart abbreviation format with multiple options. **This feature is also integrated into PersonName**.
+The package provides smart abbreviation formats with multiple options. This feature is also integrated into **PersonName** Object.
 
 ```php
 \Lakm\PersonName\Abbreviator\Abbreviator::execute(
@@ -146,8 +146,7 @@ The package provides a smart abbreviation format with multiple options. **This f
 ```
 #### Available format (`$format`) options
 
-Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.com/Lak-M/person-name/blob/main/src/Enums/Abbreviate.php)
-
+All supported `Abbreviate` enum cases are available in [Abbreviate enum class](https://github.com/Lak-M/person-name/blob/main/src/Enums/Abbreviate.php)
 
 - `\Lakm\PersonName\Enums\Abbreviate::FirstInitial_LastName`
 - `\Lakm\PersonName\Enums\Abbreviate::FirstInitial_MiddleInitial_LastName`
@@ -159,7 +158,8 @@ Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.c
 ### Common API
 
 > [!Important]
-> See [NameBuilderContract](https://github.com/Lak-M/person-name/blob/main/src/Contracts/NameBuilderContract.php) for all the available options
+> The Package provides a range of methods and following documentation only contins most common ones.
+> See [NameBuilderContract](https://github.com/Lak-M/person-name/blob/main/src/Contracts/NameBuilderContract.php) for all the available options.
 
 #### Basic
 
@@ -168,7 +168,8 @@ Any `Abbreviate` enum case available in [Abbreviate enum class](https://github.c
 Check the validity of a name
 
 ```php
-use \Lakm\PersonName\PersonName;        
+use \Lakm\PersonName\PersonName;
+
 PersonName::checkValidity('John Doe'); // true
 PersonName::checkValidity('John123'); // false
 PersonName::checkValidity('John#'); // false
@@ -308,13 +309,13 @@ The package offers country specific methods, available in the classes(each named
 
 ##### Arab
 
-- **fatherName(): ?string**
-- **grandfatherName(): ?string**
-- **kunya(): ?string**
-- **ism(): ?string**
-- **nasab(): ?string**
-- **laqab(): ?string**
-- **nisbah(): ?string**
+- *fatherName(): ?string*
+- *grandfatherName(): ?string*
+- *kunya(): ?string*
+- *ism(): ?string*
+- *nasab(): ?string*
+- *laqab(): ?string*
+- *nisbah(): ?string*
 
 ## Testing
 ```bash
