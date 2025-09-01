@@ -4,6 +4,20 @@
 
 <hr/>
 
+**[Overview](#overview)** |
+**[Insight](#insight)** |
+**[Motive](#motive)** |
+**[Features](#features)** |
+**[Usage](#usage)** |
+**[API](#common-api)** |
+**[Abbreviator](#abbreviator)** |
+**[Changelog](#changelog)** |
+**[Testing](#testing)** |
+**[Security](#security)** |
+**[License](#license)** 
+
+<hr>
+
 <img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="440" alt="Image"/>
 
 ### ***This package globally handle person names in various formats.***
@@ -64,8 +78,8 @@ So, I decided to stop waiting and develop a solution myself. I must give credit 
 
 ## Features
 - 🏁 Handle **Country specific** names
-- 🛠️ **Build names from **full names**
-- 🛠️ **Build names from **parts (constructor)**
+- 🛠️ Build names from **full names**
+- 🛠️ Build names from **parts (constructor)**
 - ⚙️ Handle **particles, prefixes, suffixes (western)**
 - 🛡️ Universal - **Multibyte safe**
 - 🤖 Auto **sanitize** names
@@ -321,9 +335,14 @@ The package offers country specific methods, available in the classes(each named
 ./vendor/bin/pest
 ```
 
+## Changelog
+Please see CHANGELOG for more information what has changed recently.
+
 ## Security
 Please see [here](https://github.com/Lak-M/person-name/blob/main/SECURITY.md) for our security policy.
 
 ## License
 The MIT License (MIT). Please see [License File](https://github.com/Lak-M/person-name/blob/main/LICENSE.md) for more information.
 
+## Credits
+- [Name of Person](https://github.com/hosmelq/name-of-person)
