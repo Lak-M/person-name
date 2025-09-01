@@ -6,6 +6,7 @@ namespace Lakm\PersonName\NameBuilders;
 
 use Lakm\PersonName\Enums\Abbreviate;
 use Lakm\PersonName\Exceptions\FormatNotSupportException;
+use Lakm\PersonName\Exceptions\InvalidNameException;
 use Lakm\PersonName\Exceptions\PartNotSupportException;
 use Override;
 
@@ -34,6 +35,9 @@ class CN extends DefaultBuilder
         "博士",
     ];
 
+    /**
+     * @throws InvalidNameException
+     */
     #[Override]
     public static function fromFullName(string $fullName, bool $shouldSanitize = true): static
     {
@@ -46,7 +50,7 @@ class CN extends DefaultBuilder
         $nameLength = mb_strlen($fullName, 'UTF-8');
 
         if ($nameLength < 2) {
-            throw new InvalidArgumentException('Full name must be at least 2 characters long.');
+            throw InvalidNameException::from('Full name must be at least 2 characters long.');
         }
 
         // Detect surname (last name in Western mapping)
@@ -110,7 +114,7 @@ class CN extends DefaultBuilder
         bool $removeParticles = false,
         Abbreviate $format = Abbreviate::Initials,
     ): string {
-        throw new FormatNotSupportException('Abbreviation not supported for CN names.');
+        throw FormatNotSupportException::from('Abbreviation not supported for CN names.');
     }
 
     /**
@@ -118,7 +122,7 @@ class CN extends DefaultBuilder
      */
     public function suffix(): ?string
     {
-        throw new PartNotSupportException('Suffixes not supported for CN names.');
+        throw PartNotSupportException::from('Suffixes not supported for CN names.');
     }
 
     /**
