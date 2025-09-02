@@ -125,7 +125,7 @@ class Arab extends DefaultBuilder
         return $this->first();
     }
 
-    public function fatherName(): ?string
+    public function father(): ?string
     {
         $words = static::clear($this->fullName());
         $words = array_map('mb_strtolower', $words);
@@ -155,7 +155,7 @@ class Arab extends DefaultBuilder
         return null;
     }
 
-    public function grandfatherName(): ?string
+    public function grandfather(): ?string
     {
         $words = static::clear($this->fullName());
 
