@@ -80,13 +80,17 @@ it('can create a person name', function (): void {
     $firstName = 'david';
     $middleName = 'volt';
     $lastName = 'henry';
+    $prefix = 'Dr.';
+    $suffix = 'Jr.';
 
-    $pn = PersonName::build($firstName, $middleName, $lastName);
+    $pn = PersonName::build($firstName, $middleName, $lastName, $prefix, $suffix);
 
     expect($pn)->toBeInstanceOf(DefaultBuilder::class)
         ->and($pn->first())->toBe($firstName)
         ->and($pn->middle())->toBe($middleName)
-        ->and($pn->last())->toBe($lastName);
+        ->and($pn->last())->toBe($lastName)
+        ->and($pn->suffix())->toBe($suffix)
+        ->and($pn->prefix())->toBe($prefix);
 });
 
 it('can create a sanitizes person name', function (): void {

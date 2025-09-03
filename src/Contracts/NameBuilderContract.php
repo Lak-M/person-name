@@ -248,8 +248,8 @@ abstract class NameBuilderContract
             'firstName' => $this->firstName,
             'middleName' => $this->middleName,
             'lastName' => $this->lastName,
-            'prefix' => $this->lastName,
-            'suffix' => $this->lastName,
+            'prefix' => $this->prefix,
+            'suffix' => $this->suffix,
         ];
     }
 
