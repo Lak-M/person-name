@@ -52,7 +52,7 @@ final readonly class PersonName
         bool $checkValidity = false,
     ): NameBuilderContract {
         if ($checkValidity) {
-            foreach (array_filter([$firstName, $middleName, $lastName, $suffix, $prefix]) as $part) {
+            foreach (array_filter([$firstName, $middleName, $lastName]) as $part) {
                 self::throwInvalidException($part);
             }
         }
