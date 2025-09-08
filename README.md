@@ -78,7 +78,7 @@ I realized it couldn’t fulfill my expectations. It handles simple cases but no
 So, I decided to stop waiting and develop a solution myself. I must give credit to this package, as it ignited the spark.
 
 ## Features
-- 🏁 Handle **Country specific** names
+- 🏁 Handle **Country|Ethnicity specific** names
 - 🛠️ Build names from **full names**
 - 🛠️ Build names from **parts (constructor)**
 - ⚙️ Handle **particles, prefixes, suffixes (western)**
