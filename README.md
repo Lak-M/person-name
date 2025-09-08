@@ -21,7 +21,7 @@
 
 <img src="https://github.com/user-attachments/assets/ef6088e7-4de5-45c2-b804-0c46b27c918e" width="440" alt="Image"/>
 
-### ***This package globally handle person names in various formats.***
+### ***This package globally extract handle person names in various formats.***
 
 
 [![PHP](https://img.shields.io/badge/php-%20%5E8.3-blue)](https://php.net)
