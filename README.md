@@ -33,7 +33,7 @@
 </div>
 
 ## Overview
-This package maps names from various countries to a standard format **[prefix + first + middle + last + suffix]** and 
+This package maps names from various countries to the standard format **[prefix + first + middle + last + suffix]** and 
 provides multiple **country|ethnicity** specific formats and features.
 
 ## Insight
