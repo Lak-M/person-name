@@ -86,7 +86,7 @@ So, I decided to stop waiting and develop a solution myself. I must give credit 
 - 🤖 Auto **sanitize** names
 - ✅ **Validity** check
 - ●●● Name **Abbreviations**
-  - FirstInitial_LastName**
+  - FirstInitial_LastName
   - FirstInitial_MiddleInitial_LastName
   - FirstName_LastInitial
   - FirstName_MiddleInitial_LastName
@@ -98,7 +98,7 @@ So, I decided to stop waiting and develop a solution myself. I must give credit 
   - Family|sur|last
   - etc
 - 🧩 **Country|Ethnicity specific** features
-- 📔 Comprehensive **test cases** with **>85%** coverage
+- 📔 Comprehensive **test cases** with **> 85%** coverage
 - 💡 Elegant **architecture**
 - 🦢 **Pure PHP** - can use anywhere frameworks, lib etc.
 
