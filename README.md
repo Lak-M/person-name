@@ -36,6 +36,10 @@
 This package maps names from various countries to the standard format **[prefix + first + middle + last + suffix]** and 
 provides multiple **country|ethnicity** specific formats and features.
 
+>[!important]
+> I' am not claiming this is the best solution though I did my best. Practically it is quite impossible to cover all the cases but we can cover whatever the possible use cases.
+> With your feedback and support we can make this better. You can try it in https://person-name-king.vercel.app.
+
 ## Insight
 
 ### Problem
